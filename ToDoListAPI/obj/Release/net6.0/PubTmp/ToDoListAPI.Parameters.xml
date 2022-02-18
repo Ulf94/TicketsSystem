@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="taskmanagermaz" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Users\\m\.szura\\source\\repos\\ToDoListAPIApp\\ToDoListAPI\\obj\\Release\\net6\.0\\PubTmp\\Out\\$" />
+  </parameter>
+  <parameter name="ToDoListAPI.Data.DataContext" description="" value="Data Source=tcp:todolistservermaz.database.windows.net,1433;Initial Catalog=ToDoListDB;User Id=mszura@todolistservermaz;Password=nuka123!" tags="dbfullsql">
+    <parameterEntry kind="ProviderPath" scope="dbfullsql" match="^C:\\Users\\m\.szura\\source\\repos\\ToDoListAPIApp\\ToDoListAPI\\obj\\Release\\net6\.0\\PubTmp\\EFSQLScripts\\ToDoListAPI\.Data\.DataContext\.sql$" />
+  </parameter>
+</parameters>

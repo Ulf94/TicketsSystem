@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -49,11 +50,11 @@ namespace ToDoListAPI
                 options.AddPolicy(name: myAllowSpecificOrigins,
                     builder =>
                     {
-                        builder.WithOrigins("https://yellow-coast-06b80cb10.1.azurestaticapps.net",
-                                            "https://localhost:4200").
+                        //builder.WithOrigins("https://yellow-coast-06b80cb10.1.azurestaticapps.net",
+                        //                    "https://localhost:4200").
+                        builder.AllowAnyOrigin().
                         AllowAnyMethod().
-                        AllowAnyHeader().
-                        AllowCredentials();
+                        AllowAnyHeader();
                     });
             });
 
@@ -94,6 +95,10 @@ namespace ToDoListAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "ToDoListAPI v1");
+                });
             }
 
             app.UseHttpsRedirection();

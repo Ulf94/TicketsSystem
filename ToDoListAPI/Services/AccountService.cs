@@ -19,7 +19,6 @@ namespace ToDoListAPI.Services
     {
         void RegisterUser(UserRegister dto);
         string GenerateJwt(UserLogin dto);
-        User GetUserById(int id);
     }
     public class AccountService : IAccountService
     {
@@ -102,13 +101,6 @@ namespace ToDoListAPI.Services
 
             var tokenHandler = new JwtSecurityTokenHandler();
             return tokenHandler.WriteToken(token);
-        }
-
-        public User GetUserById(int id)
-        {
-            var user = _dataContext.Users.Where(s => s.Id == id).FirstOrDefault();
-
-            return user;
         }
     }
 }

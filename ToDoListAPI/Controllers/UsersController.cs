@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,6 +56,11 @@ namespace ToDoListAPI.Controllers
 
             try
             {
+                var existingUser = _context.Users.Where(x => x.Id == id).FirstOrDefault();
+                if (existingUser != null)
+                {
+                    user.PasswordHash = existingUser.PasswordHash;
+                }
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
@@ -70,6 +76,45 @@ namespace ToDoListAPI.Controllers
             }
 
             return NoContent();
+        }
+
+        [HttpPatch]
+        [AllowAnonymous]
+        public async Task<IActionResult> PatchUser([FromBody] UserPatchRequest userPatchRequest)
+        {
+            var user = _context.Users.Where(x => x.Id == userPatchRequest.Id).FirstOrDefault();
+            
+            if(user == null) 
+                return NotFound();
+            else
+            {
+                _context.Entry(user).State = EntityState.Modified;
+
+                try
+                {
+                    user.FirstName = userPatchRequest.FirstName;
+                    user.LastName = userPatchRequest.LastName;
+                    user.Email = userPatchRequest.Email;
+                    user.Nationality = userPatchRequest.Nationality;
+                    user.RoleId = userPatchRequest.RoleId;
+                    user.DateOfBirth = userPatchRequest.DateOfBirth;
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!UserExists(userPatchRequest.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return NoContent();
+            }
+            
         }
 
         // POST: api/Users

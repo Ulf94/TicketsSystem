@@ -47,6 +47,7 @@ namespace ToDoListAPI.Controllers
 
        
         [HttpPut("{id}")]
+        [Authorize(Roles ="Manager")]
         public async Task<IActionResult> PutTask(int id, Task task)
         {
             if (id != task.Id)
@@ -77,7 +78,7 @@ namespace ToDoListAPI.Controllers
 
        
         [HttpPost]
-        [Authorize(Roles ="Admin, User")]
+        [Authorize(Roles = "Admin, Manager, User")]
         public async Task<ActionResult<Task>> PostTask(Task task)
         {
             _context.Tasks.Add(task);
@@ -88,6 +89,7 @@ namespace ToDoListAPI.Controllers
 
         // DELETE: api/Tasks/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin, Manager")]
         public async Task<IActionResult> DeleteTask(int id)
         {
             var task = await _context.Tasks.FindAsync(id);

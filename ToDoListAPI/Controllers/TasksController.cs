@@ -47,7 +47,7 @@ namespace ToDoListAPI.Controllers
 
        
         [HttpPut("{id}")]
-        [Authorize(Roles ="Manager")]
+        [Authorize(Roles ="Manager, Admin ")]
         public async Task<IActionResult> PutTask(int id, Task task)
         {
             if (id != task.Id)

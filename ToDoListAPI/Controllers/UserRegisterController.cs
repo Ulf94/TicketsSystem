@@ -23,7 +23,7 @@ namespace ToDoListAPI.Controllers
 
         // POST api/<UserRegisterController>
         [HttpPost]
-        public async Task<IActionResult> Register([FromBody] UserRegister userRegister)
+        public async Task<IActionResult> Register([FromBody] UserRegisterDto userRegister)
         {
             _accountService.RegisterUser(userRegister);
             return Ok();

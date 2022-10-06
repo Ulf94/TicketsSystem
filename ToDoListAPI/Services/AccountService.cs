@@ -17,7 +17,7 @@ namespace ToDoListAPI.Services
 {
     public interface IAccountService
     {
-        void RegisterUser(UserRegister dto);
+        void RegisterUser(UserRegisterDto dto);
         string GenerateJwt(UserLogin dto);
     }
     public class AccountService : IAccountService
@@ -32,7 +32,7 @@ namespace ToDoListAPI.Services
             _passwordHasher = passwordHasher;
             _authenticationSettings = authenticationSettings;
         }
-        public void RegisterUser(UserRegister dto)
+        public void RegisterUser(UserRegisterDto dto)
         {
             var newUser = new User()
             {

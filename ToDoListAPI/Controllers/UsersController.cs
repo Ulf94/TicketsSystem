@@ -80,7 +80,7 @@ namespace ToDoListAPI.Controllers
 
         [HttpPatch]
         [AllowAnonymous]
-        public async Task<IActionResult> PatchUser([FromBody] UserPatchRequest userPatchRequest)
+        public async Task<IActionResult> PatchUser([FromBody] UserPatchRequestDto userPatchRequest)
         {
             var user = _context.Users.Where(x => x.Id == userPatchRequest.Id).FirstOrDefault();
             

@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -8,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Reflection;
 using System.Text;
 using ToDoListApi;
 using ToDoListAPI.Data;
@@ -44,19 +46,22 @@ namespace ToDoListAPI
                 options.UseSqlServer(Configuration.GetConnectionString("ConnectionString"));
             });
 
+            services.AddMediatR(Assembly.GetExecutingAssembly());
+
+            // Origins was tested, it works, but switched off for simplify tests with Postman.
             //Enable CORS
-            services.AddCors(options =>
-            {
-                options.AddPolicy(name: myAllowSpecificOrigins,
-                    builder =>
-                    {
-                        //builder.WithOrigins("https://yellow-coast-06b80cb10.1.azurestaticapps.net",
-                        //                    "https://localhost:4200").
-                        builder.AllowAnyOrigin().
-                        AllowAnyMethod().
-                        AllowAnyHeader();
-                    });
-            });
+            //services.AddCors(options =>
+            //{
+            //    options.AddPolicy(name: myAllowSpecificOrigins,
+            //        builder =>
+            //        {
+            //            builder.WithOrigins("https://yellow-coast-06b80cb10.1.azurestaticapps.net",
+            //                                "https://localhost:4200");
+            //            builder.AllowAnyOrigin().
+            //            AllowAnyMethod().
+            //            AllowAnyHeader();
+            //        });
+            //});
 
             services.AddAuthentication(option =>
             {
@@ -105,7 +110,9 @@ namespace ToDoListAPI
 
             app.UseRouting();
 
-            app.UseCors(myAllowSpecificOrigins);
+
+            // Origins was tested, it works, but switched off for simplify tests with Postman.
+            //app.UseCors(myAllowSpecificOrigins);
 
             app.UseAuthentication();
 

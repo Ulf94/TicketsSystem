@@ -2,7 +2,7 @@
 
 namespace ToDoListAPI.Models
 {
-    public class UserRegister
+    public class UserRegisterDto
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

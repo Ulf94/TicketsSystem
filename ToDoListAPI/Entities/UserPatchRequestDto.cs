@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ToDoListAPI.Entities
 {
-    public class UserPatchRequest
+    public class UserPatchRequestDto
     {
         public int Id { get; set; }
         public string Email { get; set; }

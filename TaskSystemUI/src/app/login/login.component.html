@@ -1,0 +1,90 @@
+<main class="login-form">
+  <div class="cotainer">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card">
+
+          <div class="card-body">
+            <form
+              action=""
+              method=""
+              #f="ngForm"
+              (ngSubmit)="onSubmit(f)"
+            >
+              <div class="form-group row m-2">
+                <label
+                  for="email"
+                  class="col-md-4 col-form-label text-md-left"
+                >Email</label>
+                <div class="col-md-6">
+                  <input
+                    type="text"
+                    id="email"
+                    class="form-control"
+                    name="email"
+                    ngModel
+                    required
+                    #email="ngModel"
+                    autofocus
+                  >
+                </div>
+              </div>
+
+              <div class="form-group row m-2">
+                <label
+                  for="password"
+                  class="col-md-4 col-form-label text-md-left"
+                >Password</label>
+                <div class="col-md-6">
+                  <input
+                    type="password"
+                    id="password"
+                    class="form-control"
+                    name="password"
+                    ngModel
+                    required
+                    #password="ngModel"
+                    autofocus
+                  >
+                </div>
+              </div>
+
+              <div
+                class="form-group row"
+                hidden
+              >
+                <div class="col-md-2 offset-md-2">
+                  <div class="checkbox">
+                    <label>
+                      <input
+                        type="checkbox"
+                        name="remember"
+                      > Remember Me
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6 offset-md-4">
+                <button
+                  type="submit"
+                  class="btn btn-primary m-2"
+                  [disabled]="f.invalid"
+                >
+                  Login
+                </button>
+                <a
+                  href="#"
+                  class="btn btn-link"
+                  hidden
+                >
+                  Forgot Your Password?
+                </a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

@@ -1,0 +1,59 @@
+<form>
+
+  <div class="mb-3">
+    <label for="taskName"
+           class="form-label">Task name</label>
+    <input type="text"
+           class="form-control"
+           [(ngModel)]="taskName"
+           name="taskName"
+           [maxlength]="20"
+           #uname="ngModel" />
+  </div>
+
+  <div class="mb-3">
+    <label for="categoryTypeId"
+           class="form-label">Category type</label>
+    <select class="form-control"
+            name="categoryTypeId"
+            id="categoryTypeId"
+            [(ngModel)]="categoryTypeId">
+      <option *ngFor="let type of categoryTypesList$|async"
+              [value]="type.id">{{type.categoryName}}</option>
+    </select>
+  </div>
+  <div class="mb-3">
+    <label for="status"
+           class="form-label">Status</label>
+    <select class="form-control"
+            name="status"
+            id="status"
+            [(ngModel)]="status">
+      <option *ngFor="let status of statusList$|async"
+              [value]="status.statusOption">{{status.statusOption}}</option>
+    </select>
+  </div>
+
+  <div class="mb-3">
+    <label for="taskDescription"
+           class="form-label">Description</label>
+    <input type="text"
+           class="form-control"
+           [(ngModel)]="taskDescription"
+           name="taskDescription" />
+  </div>
+
+  <button (click)="addTask()"
+          *ngIf="task.id==0"
+          class="btn btn-primary">
+    Add
+  </button>
+
+
+  <button (click)="updateTask()"
+          *ngIf="task.id!=0"
+          class="btn btn-secondary">
+    Update
+  </button>
+
+</form>

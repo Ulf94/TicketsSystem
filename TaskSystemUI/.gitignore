@@ -1,0 +1,60 @@
+# compiled output
+/dist
+/tmp
+/out-tsc
+
+# dependencies
+/node_modules
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+testem.log
+/typings
+
+# e2e
+/e2e/*.js
+/e2e/*.map
+
+# System Files
+.DS_Store
+Thumbs.db
+.angular/cache/babel-webpack/ff5df4890852e204e65fbb6662da41b3.json
+*.pack
+*.pack
+*.json
+*.pack
+.angular/cache/angular-webpack/ebaa6f858364450bf701777813c06c6fa338707d/index.pack.old
+.angular/cache/angular-webpack/07b6c06b2563117b5f71f01e36a12286a0558884/index.pack.old
+.angular/cache/angular-webpack/07b6c06b2563117b5f71f01e36a12286a0558884/index.pack
+.angular/cache/angular-webpack/07b6c06b2563117b5f71f01e36a12286a0558884/9.pack
+.angular/cache/angular-webpack/07b6c06b2563117b5f71f01e36a12286a0558884/8.pack
+.angular/cache/angular-webpack/07b6c06b2563117b5f71f01e36a12286a0558884/7.pack
+.angular/cache/angular-webpack/07b6c06b2563117b5f71f01e36a12286a0558884/6.pack
+.angular/cache/angular-webpack/07b6c06b2563117b5f71f01e36a12286a0558884/5.pack
+.angular/cache/angular-webpack/07b6c06b2563117b5f71f01e36a12286a0558884/4.pack
+.angular/cache/angular-webpack/07b6c06b2563117b5f71f01e36a12286a0558884/3.pack
+.angular/cache/angular-webpack/07b6c06b2563117b5f71f01e36a12286a0558884/2.pack
+.angular/cache/angular-webpack/07b6c06b2563117b5f71f01e36a12286a0558884/11.pack
+.angular/cache/angular-webpack/07b6c06b2563117b5f71f01e36a12286a0558884/10.pack
+.angular/cache/angular-webpack/07b6c06b2563117b5f71f01e36a12286a0558884/1.pack
+.angular/cache/angular-webpack/07b6c06b2563117b5f71f01e36a12286a0558884/0.pack

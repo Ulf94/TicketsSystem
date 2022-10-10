@@ -9,8 +9,8 @@ import { isLogged } from '../navbar/navbar.component';
 })
 export class UserService {
 
-  //readonly taskAPIUrl = "https://taskmanagermaz.azurewebsites.net/api";
-  readonly taskAPIUrl = "https://localhost:44322/api";
+  //readonly ticketAPIUrl = "https://ticketmanagermaz.azurewebsites.net/api";
+  readonly ticketAPIUrl = "https://localhost:44322/api";
 
   isAuthenticated: boolean = false;
   isAdmin: boolean = false;
@@ -39,7 +39,7 @@ export class UserService {
 
 
   loginUser(userLogin: any) {
-    return this.http.post(this.taskAPIUrl + "/UserLogin", userLogin).subscribe((res: any) => {
+    return this.http.post(this.ticketAPIUrl + "/Users/login", userLogin).subscribe((res: any) => {
       this.isAuthenticated = true;
       localStorage.setItem('token', res.token);
       this.currentUser();
@@ -67,7 +67,7 @@ export class UserService {
   }
 
   currentUser(): any {
-    return this.http.get<any>(this.taskAPIUrl + "/UserLogin/getCurrentUser").subscribe(
+    return this.http.get<any>(this.ticketAPIUrl + "/Users/getCurrentUser").subscribe(
       res => {
         localStorage.setItem('userId', res.userId);
         localStorage.setItem('userName', res.userName);
@@ -86,46 +86,46 @@ export class UserService {
   // Role
 
   getRoleList(): Observable<any[]> {
-    return this.http.get<any>(this.taskAPIUrl + '/roles');
+    return this.http.get<any>(this.ticketAPIUrl + '/roles');
   }
 
   addRole(data: any) {
-    return this.http.post(this.taskAPIUrl + '/roles', data);
+    return this.http.post(this.ticketAPIUrl + '/roles', data);
   }
 
   updateRole(id: number | string, data: any) {
-    return this.http.put(this.taskAPIUrl + `/roles/${id}`, data);
+    return this.http.put(this.ticketAPIUrl + `/roles/${id}`, data);
   }
 
   deleteRole(id: number | string) {
-    return this.http.delete(this.taskAPIUrl + `/roles/${id}`);
+    return this.http.delete(this.ticketAPIUrl + `/roles/${id}`);
   }
   ///
 
   // Login
 
   loginTest(): Observable<any[]> {
-    return this.http.get<any>(this.taskAPIUrl + '/UserLogin');
+    return this.http.get<any>(this.ticketAPIUrl + '/UserLogin');
   }
 
 
 
   // Users
   getUsersList(): Observable<any[]> {
-    return this.http.get<any>(this.taskAPIUrl + '/users');
+    return this.http.get<any>(this.ticketAPIUrl + '/users');
   }
 
   updateUser(id: number | string, data: any) {
-    return this.http.patch(this.taskAPIUrl + `/users/`, data);
+    return this.http.patch(this.ticketAPIUrl + `/users/`, data);
   }
 
 
   deleteUser(id: any | string) {
-    return this.http.delete(this.taskAPIUrl + `/users/${id}`);
+    return this.http.delete(this.ticketAPIUrl + `/users/${id}`);
   }
 
   registerUser(user: any) {
-    return this.http.post(this.taskAPIUrl + "/UserRegister", user);
+    return this.http.post(this.ticketAPIUrl + "/UserRegister", user);
   }
 
   isLogged(): boolean {

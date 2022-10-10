@@ -47,7 +47,7 @@ namespace TicketSystemAPI.Services
             
             if(_dataContext.Users.Where(m => m.Email == newUser.Email).Any())
             { 
-                throw new BadRequestException("Email exists"); 
+                throw new BadRequestException("Email already exists"); 
             }
 
             var hashedPassword = _passwordHasher.HashPassword(newUser, dto.Password);

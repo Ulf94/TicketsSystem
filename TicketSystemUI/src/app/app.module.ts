@@ -5,11 +5,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { TaskComponent } from './task/task.component';
-import { TaskApiService } from './services/task-api.service';
+import { TicketComponent } from './ticket/ticket.component';
+import { TicketApiService } from './services/ticket-api.service';
 import { UserService } from './services/user.service';
-import { ShowTaskComponent } from './task/show-task/show-task.component';
-import { AddEditTaskComponent } from './task/add-edit-task/add-edit-task.component';
+import { ShowTicketComponent } from './ticket/show-ticket/show-ticket.component';
+import { AddEditTicketComponent } from './ticket/add-edit-ticket/add-edit-ticket.component';
 import { LoginComponent } from './login/login.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { TokenInterceptorService } from './services/token-interceptor.service';
@@ -21,9 +21,9 @@ import { EditUserComponent } from './adminpanel/edit-user/edit-user.component';
 @NgModule({
   declarations: [
     AppComponent,
-    TaskComponent,
-    ShowTaskComponent,
-    AddEditTaskComponent,
+    TicketComponent,
+    ShowTicketComponent,
+    AddEditTicketComponent,
     LoginComponent,
     NavbarComponent,
     routingComponents,
@@ -38,7 +38,7 @@ import { EditUserComponent } from './adminpanel/edit-user/edit-user.component';
     ReactiveFormsModule,
     AppRoutingModule,
   ],
-  providers: [TaskApiService, UserService, {
+  providers: [TicketApiService, UserService, {
     provide: HTTP_INTERCEPTORS,
     useClass: TokenInterceptorService,
     multi: true

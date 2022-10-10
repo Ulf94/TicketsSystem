@@ -3,10 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using TicketSystemAPI.Data;
 using TicketSystemAPI.Entities;
 using TicketSystemAPI.Exceptions;
+using TicketSystemAPI.Models;
+using TicketSystemAPI.Services;
 
 namespace TicketSystemAPI.Controllers
 {
@@ -15,10 +18,12 @@ namespace TicketSystemAPI.Controllers
     public class UsersController : ControllerBase
     {
         private readonly DataContext _context;
+        private readonly IAccountService _accountService;
 
-        public UsersController(DataContext context)
+        public UsersController(DataContext context, IAccountService accountService)
         {
             _context = context;
+            _accountService = accountService;
         }
 
         // GET: api/Users
@@ -126,6 +131,48 @@ namespace TicketSystemAPI.Controllers
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetUser", new { id = user.Id }, user);
+        }
+
+        [Route("register")]
+        [HttpPost]
+        public async Task<IActionResult> Register([FromBody] UserRegisterDto userRegister)
+        {
+            _accountService.RegisterUser(userRegister);
+            return Ok();
+        }
+
+        [HttpGet]
+        [Route("getCurrentUser")]
+        public async Task<IActionResult> GetCurrentUser()
+        {
+            if (((ClaimsIdentity)User.Identity).IsAuthenticated == false)
+                return Unauthorized();
+
+            var UserId = ((ClaimsIdentity)User.Identity).Claims.ElementAtOrDefault(0).Value;
+            var UserName = ((ClaimsIdentity)User.Identity).Claims.ElementAtOrDefault(1).Value;
+            var UserRole = ((ClaimsIdentity)User.Identity).Claims.ElementAtOrDefault(2).Value;
+            var user = new LoggedUser
+            {
+                UserName = UserName,
+                UserId = UserId,
+                UserRole = UserRole
+            };
+
+            return Ok(user);
+
+        }
+
+        // POST api/<UserLoginController>
+        [HttpPost]
+        [Route("login")]
+        public ActionResult Login([FromBody] UserLogin dto)
+        {
+            string tokenGenerated = _accountService.GenerateJwt(dto);
+            var user = new UserToken()
+            {
+                Token = tokenGenerated
+            };
+            return Ok(user);
         }
 
         // DELETE: api/Users/5

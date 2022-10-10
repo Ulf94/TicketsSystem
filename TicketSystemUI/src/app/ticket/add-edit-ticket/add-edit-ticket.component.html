@@ -1,12 +1,12 @@
 <form>
 
   <div class="mb-3">
-    <label for="taskName"
-           class="form-label">Task name</label>
+    <label for="ticketName"
+           class="form-label">Ticket name</label>
     <input type="text"
            class="form-control"
-           [(ngModel)]="taskName"
-           name="taskName"
+           [(ngModel)]="ticketName"
+           name="ticketName"
            [maxlength]="20"
            #uname="ngModel" />
   </div>
@@ -35,23 +35,23 @@
   </div>
 
   <div class="mb-3">
-    <label for="taskDescription"
+    <label for="ticketDescription"
            class="form-label">Description</label>
     <input type="text"
            class="form-control"
-           [(ngModel)]="taskDescription"
-           name="taskDescription" />
+           [(ngModel)]="ticketDescription"
+           name="ticketDescription" />
   </div>
 
-  <button (click)="addTask()"
-          *ngIf="task.id==0"
+  <button (click)="addTicket()"
+          *ngIf="ticket.id==0"
           class="btn btn-primary">
     Add
   </button>
 
 
-  <button (click)="updateTask()"
-          *ngIf="task.id!=0"
+  <button (click)="updateTicket()"
+          *ngIf="ticket.id!=0"
           class="btn btn-secondary">
     Update
   </button>

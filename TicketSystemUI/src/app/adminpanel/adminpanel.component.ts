@@ -2,7 +2,7 @@ import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { TaskApiService } from '../services/task-api.service';
+import { TicketApiService } from '../services/ticket-api.service';
 import { UserService } from '../services/user.service';
 
 @Component({
@@ -12,7 +12,7 @@ import { UserService } from '../services/user.service';
 })
 export class AdminpanelComponent implements OnInit {
 
-  constructor(private service: TaskApiService,
+  constructor(private service: TicketApiService,
     private http: HttpClient,
     public userService: UserService) { }
 

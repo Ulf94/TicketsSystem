@@ -24,7 +24,7 @@ namespace TaskSystemAPI.Functions.Tickets.Command
                 TicketName = request.TicketName,
                 AddedByUserId = request.AddedByUserId,
                 CategoryTypeId = request.CategoryTypeId,
-                ResponsibleUserId = request.ResponsibleUserId,
+                ResponsibleUserId = null,
                 TicketDescription = request.TicketDescription,
                 StatusId = 1
                 

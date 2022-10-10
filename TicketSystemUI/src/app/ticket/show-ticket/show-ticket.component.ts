@@ -2,20 +2,23 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { TaskApiService } from 'src/app/services/task-api.service';
+import { TicketApiService } from 'src/app/services/ticket-api.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
-  selector: 'app-show-task',
-  templateUrl: './show-task.component.html',
-  styleUrls: ['./show-task.component.css']
+  selector: 'app-show-ticket',
+  templateUrl: './show-ticket.component.html',
+  styleUrls: ['./show-ticket.component.css']
 })
-export class ShowTaskComponent implements OnInit {
+export class ShowTicketComponent implements OnInit {
 
-  taskList$!: Observable<any[]>;
+  ticketList$!: Observable<any[]>;
   categoryTypesList$!: Observable<any[]>;
   categoryTypesList: any = [];
   categoryTypesMap: Map<number, string> = new Map();
+  statusMap: Map<number, string> = new Map();
+  statusList: any = [];
+  statusList$!: Observable<any[]>;
   usersList$!: Observable<any[]>;
   usersList: any = [];
   usersMap: Map<number, string> = new Map();
@@ -23,23 +26,25 @@ export class ShowTaskComponent implements OnInit {
 
 
 
-  constructor(private service: TaskApiService,
+  constructor(private service: TicketApiService,
     private http: HttpClient,
     public userService: UserService) { }
 
   ngOnInit(): void {
-    this.taskList$ = this.service.getTasksList();
+    this.ticketList$ = this.service.getTicketsList();
     this.categoryTypesList$ = this.service.getCategoryTypesList();
+    this.statusList$ = this.service.getStatusList();
     this.usersList$ = this.userService.getUsersList();
     this.refreshCategoryTypesMap();
+    this.refreshStatusMap();
     this.refreshUsersMap();
   }
 
 
   //Variables (properties)
   modalTitle: string = '';
-  activateAddEditTaskComponent: boolean = false;
-  task: any;
+  activateAddEditTicketComponent: boolean = false;
+  ticket: any;
 
   refreshCategoryTypesMap() {
     this.service.getCategoryTypesList().subscribe(data => {
@@ -47,6 +52,16 @@ export class ShowTaskComponent implements OnInit {
 
       for (let i = 0; i < data.length; i++) {
         this.categoryTypesMap.set(this.categoryTypesList[i].id, this.categoryTypesList[i].categoryName);
+      }
+    })
+  }
+
+  refreshStatusMap() {
+    this.service.getStatusList().subscribe(data => {
+      this.statusList = data;
+
+      for (let i = 0; i < data.length; i++) {
+        this.statusMap.set(this.statusList[i].id, this.statusList[i].statusOption);
       }
     })
   }
@@ -62,32 +77,32 @@ export class ShowTaskComponent implements OnInit {
   }
 
   modalAdd() {
-    this.task = {
+    this.ticket = {
       id: 0,
-      taskName: null,
+      ticketName: null,
       categoryTypeId: null,
-      taskDescription: null,
+      ticketDescription: null,
       status: null
     }
-    this.modalTitle = "Add task";
-    this.activateAddEditTaskComponent = true;
+    this.modalTitle = "Add ticket";
+    this.activateAddEditTicketComponent = true;
   }
 
   modalEdit(item: any) {
-    this.task = item;
-    this.modalTitle = "Edit task";
-    this.activateAddEditTaskComponent = true;
+    this.ticket = item;
+    this.modalTitle = "Edit ticket";
+    this.activateAddEditTicketComponent = true;
   }
 
   modalClose() {
-    this.activateAddEditTaskComponent = false;
-    this.taskList$ = this.service.getTasksList();
+    this.activateAddEditTicketComponent = false;
+    this.ticketList$ = this.service.getTicketsList();
   }
 
-  deleteTask(item: any) {
+  deleteTicket(item: any) {
     var confirmationMessage = item.id;
-    if (confirm('Are you sure you want to delete task with ID: ' + confirmationMessage)) {
-      this.service.deleteTask(item.id).subscribe(response => {
+    if (confirm('Are you sure you want to delete ticket with ID: ' + confirmationMessage)) {
+      this.service.deleteTicket(item.id).subscribe(response => {
         var closeModalBtn = document.getElementById('add-edit-modal-close');
         if (closeModalBtn) {
           closeModalBtn.click();
@@ -102,7 +117,7 @@ export class ShowTaskComponent implements OnInit {
             showDeleteSuccess.style.display = "none";
           }
         }, 4000);
-        this.taskList$ = this.service.getTasksList();
+        this.ticketList$ = this.service.getTicketsList();
       });
     }
   }

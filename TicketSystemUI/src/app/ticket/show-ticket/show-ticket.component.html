@@ -1,15 +1,15 @@
-<!-- Add new task button -->
+<!-- Add new ticket button -->
 <button type="button"
         class="btn btn-primary float-end m-2"
         data-bs-toggle="modal"
         data-bs-target="#staticBackdrop"
         (click)="modalAdd()"
         [disabled]="this.userService.isAuthenticated == false">
-  Add new task
+  Add new ticket
 </button>
 
 
-<!-- Show tasks' categories button -->
+<!-- Show tickets' categories button -->
 <button type="button"
         class="btn btn-secondary float-end m-2"
         data-bs-toggle="modal"
@@ -29,12 +29,12 @@
     <th [hidden]="this.userService.isAuthenticated == false">Options</th>
   </thead>
   <tbody>
-    <tr *ngFor="let item of taskList$|async">
+    <tr *ngFor="let item of ticketList$|async">
       <td>{{item.id}}</td>
       <td>{{item.ticketName}}</td>
       <td>{{categoryTypesMap.get(item.categoryTypeId)}}</td>
       <td>{{item.ticketDescription}}</td>
-      <td>{{item.status}}</td>
+      <td>{{statusMap.get(item.statusId)}}</td>
       <td>{{usersMap.get(item.addedByUserId)}}</td>
       <td [hidden]="this.userService.isAuthenticated == false">
         <button class="btn btn-outline-primary me-2 mb-1"
@@ -54,7 +54,7 @@
           </svg>
         </button>
         <button class="btn btn-outline-danger me-2 mb-1"
-                (click)="deleteTask(item)">
+                (click)="deleteTicket(item)">
           <svg xmlns="http://www.w3.org/2000/svg"
                width="16"
                height="16"
@@ -75,31 +75,31 @@
 <div class="alert alert-success"
      role="alert"
      id="add-success-alert">
-  Task added successfully!
+  Ticket added successfully!
 </div>
 
 <div class="alert alert-success"
      role="alert"
      id="update-success-alert">
-  Task updated successfully!
+  Ticket updated successfully!
 </div>
 
 <div class="alert alert-success"
      role="alert"
      id="delete-success-alert">
-  Task deleted successfully!
+  Ticket deleted successfully!
 </div>
 
 <div class="alert alert-warning"
      role="alert"
      id="add-failed-alert">
-  Task not added !
+  Ticket not added !
 </div>
 
 
 
 
-<!-- Add or edit task modal -->
+<!-- Add or edit ticket modal -->
 <div class="modal fade"
      id="staticBackdrop"
      data-bs-backdrop="static"
@@ -120,8 +120,8 @@
                 id="add-edit-modal-close"></button>
       </div>
       <div class="modal-body">
-        <app-add-edit-task [task]="task"
-                           *ngIf="activateAddEditTaskComponent"></app-add-edit-task>
+        <app-add-edit-ticket [ticket]="ticket"
+                             *ngIf="activateAddEditTicketComponent"></app-add-edit-ticket>
       </div>
     </div>
   </div>

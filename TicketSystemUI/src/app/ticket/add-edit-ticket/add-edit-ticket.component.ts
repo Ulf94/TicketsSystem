@@ -1,54 +1,54 @@
 import { Input, Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { TaskApiService } from 'src/app/services/task-api.service';
+import { TicketApiService } from 'src/app/services/ticket-api.service';
 import { UserService } from 'src/app/services/user.service';
 
 
 @Component({
-  selector: 'app-add-edit-task',
-  templateUrl: './add-edit-task.component.html',
-  styleUrls: ['./add-edit-task.component.css']
+  selector: 'app-add-edit-ticket',
+  templateUrl: './add-edit-ticket.component.html',
+  styleUrls: ['./add-edit-ticket.component.css']
 })
-export class AddEditTaskComponent implements OnInit {
+export class AddEditTicketComponent implements OnInit {
 
-  taskList$!: Observable<any[]>;
+  ticketList$!: Observable<any[]>;
   statusList$!: Observable<any[]>;
   categoryTypesList$!: Observable<any[]>;
 
-  constructor(private service: TaskApiService
-            , private userService: UserService) { }
+  constructor(private service: TicketApiService
+    , private userService: UserService) { }
 
-  @Input() task: any;
+  @Input() ticket: any;
   id: number = 0;
-  taskName: string = "";
+  ticketName: string = "";
   categoryTypeId: number = 0;
-  taskDescription: string = "";
+  ticketDescription: string = "";
   status: string = "";
   addedByUserId: number = 0;
 
   ngOnInit(): void {
-    this.id = this.task.id;
-    this.taskName = this.task.taskName;
-    this.categoryTypeId = this.task.categoryTypeId;
-    this.taskDescription = this.task.taskDescription;
-    this.status = this.task.status;
-    this.addedByUserId = this.task.addedByUserId;
+    this.id = this.ticket.id;
+    this.ticketName = this.ticket.ticketName;
+    this.categoryTypeId = this.ticket.categoryTypeId;
+    this.ticketDescription = this.ticket.ticketDescription;
+    this.status = this.ticket.status;
+    this.addedByUserId = this.ticket.addedByUserId;
     this.statusList$ = this.service.getStatusList();
-    this.taskList$ = this.service.getTasksList();
+    this.ticketList$ = this.service.getTicketsList();
     this.categoryTypesList$ = this.service.getCategoryTypesList();
   }
 
 
-  addTask() {
-    var task = {
-      taskName: this.taskName,
-      taskDescription: this.taskDescription,
+  addTicket() {
+    var ticket = {
+      ticketName: this.ticketName,
+      ticketDescription: this.ticketDescription,
       categoryTypeId: this.categoryTypeId,
       status: this.status,
       addedByUserId: this.userService.getUserId(),
       responsibleUserId: null// todo
     }
-    this.service.addTask(task)
+    this.service.addTicket(ticket)
       .subscribe(
         result => {
           var closeModalBtn = document.getElementById('add-edit-modal-close');
@@ -85,18 +85,18 @@ export class AddEditTaskComponent implements OnInit {
 
   }
 
-  updateTask() {
-    var task = {
+  updateTicket() {
+    var ticket = {
       id: this.id,
-      taskName: this.taskName,
-      taskDescription: this.taskDescription,
+      ticketName: this.ticketName,
+      ticketDescription: this.ticketDescription,
       categoryTypeId: this.categoryTypeId,
       status: this.status,
       addedByUserId: this.addedByUserId,
       responsibleUserId: null// todo
     }
     var id: number = this.id;
-    this.service.updateTask(id, task).subscribe(resulet => {
+    this.service.updateTicket(id, ticket).subscribe(resulet => {
       var closeModalBtn = document.getElementById('add-edit-modal-close');
       if (closeModalBtn) {
         closeModalBtn.click();
@@ -115,8 +115,8 @@ export class AddEditTaskComponent implements OnInit {
     })
   }
 
-  validate(){
-    
+  validate() {
+
   }
 
 

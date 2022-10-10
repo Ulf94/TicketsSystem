@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { TaskApiService } from 'src/app/services/task-api.service';
+import { TicketApiService } from 'src/app/services/ticket-api.service';
 import { UserService } from 'src/app/services/user.service';
 import { countries } from 'src/environments/environment';
 
@@ -26,7 +26,7 @@ export class EditUserComponent implements OnInit {
   oldNationality!: Number;
   date: string = "1994-08-24";
 
-  constructor(private service: TaskApiService,
+  constructor(private service: TicketApiService,
     private http: HttpClient,
     public userService: UserService) { }
 

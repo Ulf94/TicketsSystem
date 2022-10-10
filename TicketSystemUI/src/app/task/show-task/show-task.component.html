@@ -21,7 +21,7 @@
 <table class="table table-striped">
   <thead>
     <th>Id</th>
-    <th>Task name</th>
+    <th>Ticket name</th>
     <th>Category</th>
     <th>Description</th>
     <th>Status</th>
@@ -31,9 +31,9 @@
   <tbody>
     <tr *ngFor="let item of taskList$|async">
       <td>{{item.id}}</td>
-      <td>{{item.taskName}}</td>
+      <td>{{item.ticketName}}</td>
       <td>{{categoryTypesMap.get(item.categoryTypeId)}}</td>
-      <td>{{item.taskDescription}}</td>
+      <td>{{item.ticketDescription}}</td>
       <td>{{item.status}}</td>
       <td>{{usersMap.get(item.addedByUserId)}}</td>
       <td [hidden]="this.userService.isAuthenticated == false">

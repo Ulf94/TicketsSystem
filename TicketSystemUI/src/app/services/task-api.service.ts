@@ -13,7 +13,7 @@ export class TaskApiService {
   constructor(private http: HttpClient) { }
 
   getTasksList(): Observable<any[]> {
-    return this.http.get<any>(this.taskAPIUrl + '/tasks');
+    return this.http.get<any>(this.taskAPIUrl + '/tickets');
   }
 
   addTask(data: any) {

@@ -50,18 +50,18 @@ namespace TicketSystemAPI
 
             // Origins was tested, it works, but switched off for simplify tests with Postman.
             //Enable CORS
-            //services.AddCors(options =>
-            //{
-            //    options.AddPolicy(name: myAllowSpecificOrigins,
-            //        builder =>
-            //        {
-            //            builder.WithOrigins("https://yellow-coast-06b80cb10.1.azurestaticapps.net",
-            //                                "https://localhost:4200");
-            //            builder.AllowAnyOrigin().
-            //            AllowAnyMethod().
-            //            AllowAnyHeader();
-            //        });
-            //});
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: myAllowSpecificOrigins,
+                    builder =>
+                    {
+                        builder.WithOrigins("https://yellow-coast-06b80cb10.1.azurestaticapps.net",
+                                            "https://localhost:4200");
+                        builder.AllowAnyOrigin().
+                        AllowAnyMethod().
+                        AllowAnyHeader();
+                    });
+            });
 
             services.AddAuthentication(option =>
             {
@@ -114,7 +114,7 @@ namespace TicketSystemAPI
 
 
             // Origins was tested, it works, but switched off for simplify tests with Postman.
-            //app.UseCors(myAllowSpecificOrigins);
+            app.UseCors(myAllowSpecificOrigins);
 
             app.UseAuthentication();
 

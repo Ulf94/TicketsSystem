@@ -5,5 +5,8 @@ using TicketSystemAPI;
 
 namespace TaskSystemAPI.Functions.Tickets.Command
 {
-    public record DeleteTicketCommand(int id) : IRequest<Unit>;
+    public class DeleteTicketCommand : IRequest<Unit>
+    {
+        public int id { get; set; }
+    }
 }

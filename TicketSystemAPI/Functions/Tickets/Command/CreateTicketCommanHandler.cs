@@ -26,7 +26,7 @@ namespace TaskSystemAPI.Functions.Tickets.Command
                 CategoryTypeId = request.CategoryTypeId,
                 ResponsibleUserId = request.ResponsibleUserId,
                 TicketDescription = request.TicketDescription,
-                Status = "Just started",
+                StatusId = 1
                 
             };
 

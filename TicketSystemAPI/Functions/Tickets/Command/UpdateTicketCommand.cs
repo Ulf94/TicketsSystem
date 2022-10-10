@@ -11,7 +11,7 @@ namespace TaskSystemAPI.Functions.Tickets.Command
         public string TicketName { get; set; }
         public int CategoryTypeId { get; set; }
         public string TicketDescription { get; set; } = string.Empty;
-        public string Status { get; set; }
+        public int StatusId { get; set; }
         public int? ResponsibleUserId { get; set; } = null!;
     }
 }

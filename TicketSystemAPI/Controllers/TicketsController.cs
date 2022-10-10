@@ -48,14 +48,10 @@ namespace TicketSystemAPI.Controllers
         }
 
        
-        [HttpPatch("{id}")]
+        [HttpPatch]
         //[Authorize(Roles ="Manager, Admin ")]
-        public async Task<IActionResult> PatchTicket(int id, UpdateTicketCommand ticket)
+        public async Task<IActionResult> PatchTicket(UpdateTicketCommand ticket)
         {
-            if(id != ticket.Id)
-            {
-                return BadRequest();
-            }
             await _mediator.Send(ticket);
             return Ok();
         }
@@ -69,11 +65,11 @@ namespace TicketSystemAPI.Controllers
         }
 
         // DELETE: api/Tickets/5
-        [HttpDelete("{id}")]
+        [HttpDelete]
         //[Authorize(Roles = "Admin, Manager")]
-        public async Task<IActionResult> DeleteTicket(int id)
+        public async Task<IActionResult> DeleteTicket(DeleteTicketCommand ticket)
         {
-            await _mediator.Send(new DeleteTicketCommand(id));
+            await _mediator.Send(ticket);
             return Ok();
         }
 

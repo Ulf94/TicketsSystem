@@ -99,15 +99,15 @@ namespace TicketSystemAPI
             {
                 new Status()
                 {
+                    StatusOption = "Pending"
+                },
+                new Status()
+                {
                     StatusOption = "In progress"
                 },
                 new Status()
                 {
-                    StatusOption = "Done"
-                },
-                new Status()
-                {
-                    StatusOption = "Just started"
+                    StatusOption = "Finished"
                 },
             };
 

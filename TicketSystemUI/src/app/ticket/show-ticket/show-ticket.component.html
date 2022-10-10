@@ -26,7 +26,7 @@
     <th>Description</th>
     <th>Status</th>
     <th>Created by</th>
-    <th [hidden]="this.userService.isAuthenticated == false">Options</th>
+    <th *ngIf="this.userService.isAuthenticated == true && this.userService.loggedRole == 'Admin'">Options</th>
   </thead>
   <tbody>
     <tr *ngFor="let item of ticketList$|async">
@@ -36,7 +36,8 @@
       <td>{{item.ticketDescription}}</td>
       <td>{{statusMap.get(item.statusId)}}</td>
       <td>{{usersMap.get(item.addedByUserId)}}</td>
-      <td [hidden]="this.userService.isAuthenticated == false">
+      <!-- <td [hidden]="this.userService.isAuthenticated == false"> -->
+      <td *ngIf="this.userService.isAuthenticated == true && this.userService.loggedRole == 'Admin'">
         <button class="btn btn-outline-primary me-2 mb-1"
                 (click)="modalEdit(item)"
                 data-bs-toggle="modal"

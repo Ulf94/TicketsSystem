@@ -1,4 +1,4 @@
-# TicketSystemAPP
+# Ticket System Application
 
 Application created to manage company's requests from a customer. A customer can log in (if the user is created) and create a ticket. Then, some programmer from a team can pick up a ticket and take care of the task. The ticket can be sent back to the creator to close it (if all requirements are fulfilled).
 

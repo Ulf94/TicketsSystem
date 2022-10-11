@@ -25,7 +25,7 @@ namespace TaskSystemAPI.Functions.Tickets.Command
             var entity = _context.Tickets.FirstOrDefault(x => x.Id == request.id);
             if (entity == null)
             {
-                throw new BadRequestException("Ticket not found");
+                throw new NotFoundException("Ticket not found");
             }
             try
             {
@@ -34,7 +34,7 @@ namespace TaskSystemAPI.Functions.Tickets.Command
             }
             catch
             {
-                throw new BadRequestException("Ticket not removed");
+                throw new BadRequestException("Ticket was not removed");
             }
             return Unit.Value;
         }

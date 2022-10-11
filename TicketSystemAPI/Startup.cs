@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using RestaurantAPI.Middleware;
 using System.Reflection;
 using System.Text;
 using TicketSystemAPI;
@@ -80,6 +81,9 @@ namespace TicketSystemAPI
                 };
             });
 
+
+            services.AddScoped<ErrorHandlingMiddleware>();
+
             services.AddSingleton(authenticationSettings);
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
@@ -107,6 +111,8 @@ namespace TicketSystemAPI
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "TicketSystemAPI v1");
                 });
             }
+            app.UseMiddleware<ErrorHandlingMiddleware>();
+
 
             app.UseHttpsRedirection();
 

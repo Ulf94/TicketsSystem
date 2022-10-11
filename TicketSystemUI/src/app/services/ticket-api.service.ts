@@ -24,7 +24,11 @@ export class TicketApiService {
     return this.http.put(this.ticketAPIUrl + `/tickets/${id}`, data);
   }
 
-  deleteTicket(id: number | string) {
+  assignTicket(data: any) {
+    return this.http.patch(this.ticketAPIUrl + `/tickets/assignTicket`, data);
+  }
+
+  deleteTicket(id: number) {
     return this.http.delete(this.ticketAPIUrl + `/tickets/${id}`);
   }
 

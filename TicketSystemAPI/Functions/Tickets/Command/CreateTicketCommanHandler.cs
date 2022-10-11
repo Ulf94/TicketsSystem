@@ -34,7 +34,7 @@ namespace TaskSystemAPI.Functions.Tickets.Command
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(cancellationToken);
                 return createdTicket;
             }
             catch

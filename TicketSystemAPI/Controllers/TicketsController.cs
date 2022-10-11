@@ -38,20 +38,14 @@ namespace TicketSystemAPI.Controllers
             return await _mediator.Send(new GetAllTicketsQuery());
         }
 
-        [Route("getTicketById")]
-        [HttpGet]
-        [AllowAnonymous]
-        public async Task<ActionResult<Ticket>> GetTicketById(GetTicketByIdQuery ticket)
-        {
-            return await _mediator.Send(ticket);
-        }
+
         // GET: api/Tickets/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Ticket>> GetTicket(int id)
         {
             var request = new GetTicketByIdQuery { Id = id };
             var ticket = await _mediator.Send(request);
-            return ticket;
+            return Ok(ticket);
         }
 
        
@@ -63,20 +57,31 @@ namespace TicketSystemAPI.Controllers
             return Ok();
         }
 
-       
+        [Route("assignTicket")]
+        [HttpPatch]
+        [Authorize(Roles = "Manager, Admin, User ")]
+        public async Task<IActionResult> AssignTicket(AssignTicketCommand ticket)
+        {
+            await _mediator.Send(ticket);
+            return Ok();
+        }
+
+
         [HttpPost]
         [Authorize(Roles = "Admin, Manager, User")]
         public async Task<ActionResult<Ticket>> PostTicket(CreateTicketCommand ticket)
         {
-            return await _mediator.Send(ticket);
+            await _mediator.Send(ticket);
+            return Ok(ticket);
         }
 
         // DELETE: api/Tickets/5
-        [HttpDelete]
+        [HttpDelete("{id}")]
         [Authorize(Roles = "Admin, Manager")]
-        public async Task<IActionResult> DeleteTicket(DeleteTicketCommand ticket)
+        public async Task<IActionResult> DeleteTicket(int id)
         {
-            await _mediator.Send(ticket);
+            var request = new DeleteTicketCommand { id = id };
+            await _mediator.Send(request);
             return Ok();
         }
 

@@ -22,6 +22,13 @@ export class ShowTicketComponent implements OnInit {
   usersList$!: Observable<any[]>;
   usersList: any = [];
   usersMap: Map<number, string> = new Map();
+  ticket: any;
+  id: number = 0;
+  ticketName: string = "";
+  categoryTypeId: number = 0;
+  ticketDescription: string = "";
+  status: string = "";
+  addedByUserId: number = 0;
 
 
 
@@ -44,7 +51,7 @@ export class ShowTicketComponent implements OnInit {
   //Variables (properties)
   modalTitle: string = '';
   activateAddEditTicketComponent: boolean = false;
-  ticket: any;
+
 
   refreshCategoryTypesMap() {
     this.service.getCategoryTypesList().subscribe(data => {
@@ -71,7 +78,7 @@ export class ShowTicketComponent implements OnInit {
       this.usersList = res;
 
       for (let i = 0; i < res.length; i++) {
-        this.usersMap.set(this.usersList[i].id, this.usersList[i].firstName);
+        this.usersMap.set(this.usersList[i].id, (this.usersList[i].firstName + ' ' + this.usersList[i].lastName));
       }
     })
   }
@@ -92,6 +99,17 @@ export class ShowTicketComponent implements OnInit {
     this.ticket = item;
     this.modalTitle = "Edit ticket";
     this.activateAddEditTicketComponent = true;
+  }
+
+  modalAssign(item: any) {
+    this.ticket = item;
+    this.modalTitle = "Assign ticket";
+    console.log(this.ticket)
+    // if(confirm('Are you sure you want to add ticket to your list?')){
+
+
+    //   this.service.assignTicket(this.ticket).subscribe();
+    // }
   }
 
   modalClose() {

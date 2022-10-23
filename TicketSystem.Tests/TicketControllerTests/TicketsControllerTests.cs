@@ -43,7 +43,7 @@ namespace TicketSystem.Tests.TicketControllerTests
             //arrange
 
             //act 
-            var response = await _client.DeleteAsync("/api/tickets/5");
+            var response = await _client.DeleteAsync("/api/tickets/6");
             //assert
             response.StatusCode.Should().Be(System.Net.HttpStatusCode.NotFound);
         } 

@@ -9,13 +9,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using RestaurantAPI.Middleware;
+using TicketSystemAPI.Middleware;
 using System.Reflection;
 using System.Text;
 using TicketSystemAPI;
 using TicketSystemAPI.Data;
 using TicketSystemAPI.Entities;
 using TicketSystemAPI.Services;
+using TicketSystem.Authorization;
 
 namespace TicketSystemAPI
 {
@@ -42,27 +43,11 @@ namespace TicketSystemAPI
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TicketSystemApp", Version = "v1" });
             });
 
-            services.AddDbContext<DataContext>(options =>
-            {
-                options.UseSqlServer(Configuration.GetConnectionString("ConnectionString"));
-            });
-
             services.AddMediatR(Assembly.GetExecutingAssembly());
 
             // Origins was tested, it works, but switched off for simplify tests with Postman.
             //Enable CORS
-            services.AddCors(options =>
-            {
-                options.AddPolicy(name: myAllowSpecificOrigins,
-                    builder =>
-                    {
-                        builder.WithOrigins("https://yellow-coast-06b80cb10.1.azurestaticapps.net",
-                                            "https://localhost:4200");
-                        builder.AllowAnyOrigin().
-                        AllowAnyMethod().
-                        AllowAnyHeader();
-                    });
-            });
+            
 
             services.AddAuthentication(option =>
             {
@@ -85,9 +70,33 @@ namespace TicketSystemAPI
             services.AddScoped<ErrorHandlingMiddleware>();
 
             services.AddSingleton(authenticationSettings);
-            services.AddScoped<IAccountService, AccountService>();
+
+            
             services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
             services.AddScoped<DbSeeder>();
+
+            services.AddScoped<IAuthorizationHandler, ResourceOperationRequirementHandler>();
+            services.AddScoped<IUserContextService, UserContextService>();
+            services.AddScoped<IAccountService, AccountService>();
+            services.AddHttpContextAccessor();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: myAllowSpecificOrigins,
+                    builder =>
+                    {
+                        builder.WithOrigins("https://yellow-coast-06b80cb10.1.azurestaticapps.net",
+                                            "https://localhost:4200");
+                        builder.AllowAnyOrigin().
+                        AllowAnyMethod().
+                        AllowAnyHeader();
+                    });
+            });
+
+            services.AddDbContext<DataContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("ConnectionString"));
+            });
 
 
         }

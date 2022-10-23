@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using TicketSystemAPI.Exceptions;
 
-namespace RestaurantAPI.Middleware
+namespace TicketSystemAPI.Middleware
 {
     public class ErrorHandlingMiddleware : IMiddleware
     {

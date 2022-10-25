@@ -8,7 +8,7 @@ Like in all my projects:
 - Entity Framework Core - to communicate with database, store and read all tickets and to register, login and get all users,
 - MediatR - helps to manage CQRS,
 - JWT - authorization and authentication,
-- CORS - combines front and backed
+- CORS - combines front and backend
 
 Below, I represent pieces of my code. Just to show an overview of the whole project. 
 

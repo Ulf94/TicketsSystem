@@ -37,7 +37,7 @@ namespace TicketSystemAPI.Services
             var newUser = new User()
             {
                 Email = dto.Email,
-                RoleId = dto.RoleId,
+                RoleId = 1,
                 FirstName = dto.FirstName,
                 LastName = dto.LastName,
                 DateOfBirth = dto.DateOfBirth,

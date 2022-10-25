@@ -104,12 +104,11 @@ export class ShowTicketComponent implements OnInit {
   modalAssign(item: any) {
     this.ticket = item;
     this.modalTitle = "Assign ticket";
-    console.log(this.ticket)
-    // if(confirm('Are you sure you want to add ticket to your list?')){
-
-
-    //   this.service.assignTicket(this.ticket).subscribe();
-    // }
+    if (confirm('Are you sure you want to add ticket to your list?')) {
+      this.service.assignTicket(this.ticket).subscribe(response => {
+        this.ticketList$ = this.service.getTicketsList();
+      });
+    }
   }
 
   modalClose() {

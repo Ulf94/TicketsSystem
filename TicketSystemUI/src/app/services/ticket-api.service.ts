@@ -21,7 +21,7 @@ export class TicketApiService {
   }
 
   updateTicket(id: number | string, data: any) {
-    return this.http.put(this.ticketAPIUrl + `/tickets/${id}`, data);
+    return this.http.patch(this.ticketAPIUrl + `/tickets`, data);
   }
 
   assignTicket(data: any) {
@@ -53,18 +53,18 @@ export class TicketApiService {
   // Status
 
   getStatusList(): Observable<any[]> {
-    return this.http.get<any>(this.ticketAPIUrl + '/status');
+    return this.http.get<any>(this.ticketAPIUrl + '/statuses');
   }
 
   addStatus(data: any) {
-    return this.http.post(this.ticketAPIUrl + '/status', data);
+    return this.http.post(this.ticketAPIUrl + '/statuses', data);
   }
 
   updateStatus(id: number | string, data: any) {
-    return this.http.put(this.ticketAPIUrl + `/status/${id}`, data);
+    return this.http.put(this.ticketAPIUrl + `/statuses/${id}`, data);
   }
 
   deleteStatus(id: number | string) {
-    return this.http.delete(this.ticketAPIUrl + `/status/${id}`);
+    return this.http.delete(this.ticketAPIUrl + `/statuses/${id}`);
   }
 }

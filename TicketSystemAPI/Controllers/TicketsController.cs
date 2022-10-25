@@ -49,7 +49,6 @@ namespace TicketSystemAPI.Controllers
 
        
         [HttpPatch]
-        [Authorize(Roles ="Manager, Admin ")]
         public async Task<IActionResult> PatchTicket(UpdateTicketCommand ticket)
         {
             await _mediator.Send(ticket);
@@ -61,8 +60,8 @@ namespace TicketSystemAPI.Controllers
         [Authorize(Roles = "Manager, Admin, User ")]
         public async Task<IActionResult> AssignTicket(AssignTicketCommand ticket)
         {
-            await _mediator.Send(ticket);
-            return Ok();
+            var result = await _mediator.Send(ticket);
+            return Ok(result);
         }
 
 

@@ -5,16 +5,20 @@ using System.Threading.Tasks;
 using TicketSystemAPI;
 using TicketSystemAPI.Data;
 using TicketSystemAPI.Exceptions;
+using TicketSystemAPI.Services;
 
 namespace TaskSystemAPI.Functions.Tickets.Command
 {
     public class AssignTicketCommandHandler : IRequestHandler<AssignTicketCommand, Ticket>
     {
         private readonly DataContext _context;
+        private readonly IUserContextService _userContextService;
 
-        public AssignTicketCommandHandler(DataContext context)
+        public AssignTicketCommandHandler(DataContext context,
+                                            IUserContextService userContextService)
         {
             _context = context;
+            _userContextService = userContextService;   
         }
 
         public async Task<Ticket> Handle(AssignTicketCommand request, CancellationToken cancellationToken)
@@ -24,7 +28,7 @@ namespace TaskSystemAPI.Functions.Tickets.Command
                 var entity = _context.Tickets.FirstOrDefault(x => x.Id == request.Id);
                 if (entity != null)
                 {
-                    entity.ResponsibleUserId = request.ResponsibleUserId;
+                    entity.ResponsibleUserId = (int)_userContextService.GetUserId;
                 }
                 await _context.SaveChangesAsync(cancellationToken);
                 return entity;

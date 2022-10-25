@@ -7,6 +7,7 @@ namespace TicketSystemAPI.Services
     {
         ClaimsPrincipal User { get; }
         int? GetUserId { get; }
+        int? GetUserRoleId { get; } 
     }
 
     public class UserContextService : IUserContextService
@@ -22,5 +23,10 @@ namespace TicketSystemAPI.Services
 
         public int? GetUserId =>
             User is null ? null : (int?)int.Parse(User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier).Value);
+
+        public int? GetUserRoleId =>
+            User is null ? null : (int?)int.Parse(User.FindFirst(c => c.Type == ClaimTypes.Role).Value);
+
+
     }
 }

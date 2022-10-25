@@ -125,7 +125,7 @@ export class UserService {
   }
 
   registerUser(user: any) {
-    return this.http.post(this.ticketAPIUrl + "/UserRegister", user);
+    return this.http.post(this.ticketAPIUrl + "/users/register", user);
   }
 
   isLogged(): boolean {

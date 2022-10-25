@@ -5,16 +5,19 @@ using System.Threading.Tasks;
 using TicketSystemAPI;
 using TicketSystemAPI.Data;
 using TicketSystemAPI.Exceptions;
+using TicketSystemAPI.Services;
 
 namespace TaskSystemAPI.Functions.Tickets.Command
 {
     public class CreateTicketCommandHandler : IRequestHandler<CreateTicketCommand, Ticket>
     {
         private readonly DataContext _context;
+        private readonly IUserContextService _userContextService;
 
-        public CreateTicketCommandHandler(DataContext context)
+        public CreateTicketCommandHandler(DataContext context, IUserContextService userContextService)
         {
             _context = context;
+            _userContextService = userContextService;
         }
 
         public async Task<Ticket> Handle(CreateTicketCommand request, CancellationToken cancellationToken)
@@ -22,14 +25,10 @@ namespace TaskSystemAPI.Functions.Tickets.Command
             Ticket createdTicket = new Ticket
             {
                 TicketName = request.TicketName,
-                AddedByUserId = request.AddedByUserId,
                 CategoryTypeId = request.CategoryTypeId,
-                ResponsibleUserId = null,
                 TicketDescription = request.TicketDescription,
-                StatusId = 1
-                
+                AddedByUserId = (int)_userContextService.GetUserId
             };
-
             _context.Tickets.Add(createdTicket);
 
             try

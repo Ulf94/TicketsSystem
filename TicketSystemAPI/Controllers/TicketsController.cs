@@ -17,7 +17,6 @@ namespace TicketSystemAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Manager, Admin")]
     public class TicketsController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -71,13 +70,12 @@ namespace TicketSystemAPI.Controllers
         [Authorize(Roles = "Admin, Manager, User")]
         public async Task<ActionResult<Ticket>> PostTicket(CreateTicketCommand ticket)
         {
-            await _mediator.Send(ticket);
-            return Ok(ticket);
+            var result = await _mediator.Send(ticket);
+            return Ok(result);
         }
 
         // DELETE: api/Tickets/5
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin, Manager")]
         public async Task<IActionResult> DeleteTicket(int id)
         {
             var request = new DeleteTicketCommand { id = id };

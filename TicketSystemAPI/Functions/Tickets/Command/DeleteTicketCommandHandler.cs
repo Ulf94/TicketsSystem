@@ -32,21 +32,18 @@ namespace TaskSystemAPI.Functions.Tickets.Command
             {
                 throw new NotFoundException("Ticket not found");
             }
-            try
+            var authorizationResult = _authorizationService.AuthorizeAsync(_userContextService.User, entity, 
+                                                            new ResourceOperationRequirement(ResourceOperation.Delete)).Result;
+            if (!authorizationResult.Succeeded)
             {
-                var authorizationResult = _authorizationService.AuthorizeAsync(_userContextService.User, entity, new ResourceOperationRequirement(ResourceOperation.Delete)).Result;
-                if (authorizationResult.Succeeded) // ToDo
-                {
-                    _context.Tickets.Remove(entity);
-                    await _context.SaveChangesAsync(cancellationToken);
-                }
-                throw new BadRequestException("Ticket was not removed.");
+                throw new ForbidException("Action forbidden");
             }
-            catch
-            {
-                throw new BadRequestException("Ticket was not removed");
-            }
+
+            _context.Tickets.Remove(entity);
+            await _context.SaveChangesAsync(cancellationToken);
             return Unit.Value;
+            
+
         }
     }
 }

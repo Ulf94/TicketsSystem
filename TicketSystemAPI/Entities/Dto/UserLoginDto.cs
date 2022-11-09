@@ -1,6 +1,6 @@
-﻿namespace TicketSystemAPI.Models
+﻿namespace TicketSystemAPI.Entities.Dto
 {
-    public class UserLogin
+    public class UserLoginDto
     {
         public string Email { get; set; }
         public string Password { get; set; }

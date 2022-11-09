@@ -26,6 +26,7 @@ export class AddEditTicketComponent implements OnInit {
   ticketDescription: string = "";
   statusId: number = 0;
   addedByUserId: number = 0;
+  responsibleUserId: number = 0;
 
   ngOnInit(): void {
     this.id = this.ticket.id;
@@ -34,8 +35,9 @@ export class AddEditTicketComponent implements OnInit {
     this.ticketDescription = this.ticket.ticketDescription;
     this.statusId = this.ticket.statusId;
     this.addedByUserId = this.ticket.addedByUserId;
+    this.responsibleUserId = this.ticket.responsibleUserId;
     this.statusList$ = this.service.getStatusList();
-    this.ticketList$ = this.service.getTicketsList();
+    //this.ticketList$ = this.service.getTicketsList();
     this.categoryTypesList$ = this.service.getCategoryTypesList();
   }
 
@@ -94,7 +96,7 @@ export class AddEditTicketComponent implements OnInit {
       categoryTypeId: this.categoryTypeId,
       statusId: this.statusId,
       addedByUserId: this.addedByUserId,
-      responsibleUserId: null
+      responsibleUserId: this.responsibleUserId
     }
     console.log(ticket);
     var id: number = this.id;

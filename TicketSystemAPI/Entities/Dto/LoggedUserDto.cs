@@ -1,6 +1,6 @@
-﻿namespace TicketSystemAPI.Models
+﻿namespace TicketSystemAPI.Entities.Dto
 {
-    public class LoggedUser
+    public class LoggedUserDto
     {
         public string UserId { get; set; }
         public string UserName { get; set; }

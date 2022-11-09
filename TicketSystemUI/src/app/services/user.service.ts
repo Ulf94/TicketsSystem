@@ -3,6 +3,8 @@ import { Injectable, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, map, Observable } from 'rxjs';
 import { isLogged } from '../navbar/navbar.component';
+import { TicketApiService } from 'src/app/services/ticket-api.service';
+
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +20,9 @@ export class UserService {
   loggedUserName: string | null = "";
   loggedRole: string | null = "";
 
-  constructor(private http: HttpClient
-    , private router: Router) {
+  constructor(private http: HttpClient,
+    private router: Router,
+    private service: TicketApiService,) {
     if (localStorage.getItem("userName") != null) {
       this.loggedUserName = localStorage.getItem("userName");
       this.loggedRole = localStorage.getItem("userRole");
@@ -42,11 +45,8 @@ export class UserService {
     return this.http.post(this.ticketAPIUrl + "/Users/login", userLogin).subscribe((res: any) => {
       this.isAuthenticated = true;
       localStorage.setItem('token', res.token);
-      this.currentUser();
-
-      console.log("Logged. Checking role")
-
-      this.router.navigate([''])
+      this.router.navigate(['/'])
+      this.service.getTickets();
     },
       err => {
         console.log(err);

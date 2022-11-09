@@ -7,8 +7,8 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using TicketSystemAPI.Data;
 using TicketSystemAPI.Entities;
+using TicketSystemAPI.Entities.Dto;
 using TicketSystemAPI.Exceptions;
-using TicketSystemAPI.Models;
 using TicketSystemAPI.Services;
 
 namespace TicketSystemAPI.Controllers
@@ -147,7 +147,7 @@ namespace TicketSystemAPI.Controllers
             var UserId = ((ClaimsIdentity)User.Identity).Claims.ElementAtOrDefault(0).Value;
             var UserName = ((ClaimsIdentity)User.Identity).Claims.ElementAtOrDefault(1).Value;
             var UserRole = ((ClaimsIdentity)User.Identity).Claims.ElementAtOrDefault(2).Value;
-            var user = new LoggedUser
+            var user = new LoggedUserDto
             {
                 UserName = UserName,
                 UserId = UserId,
@@ -161,10 +161,10 @@ namespace TicketSystemAPI.Controllers
         // POST api/<UserLoginController>
         [HttpPost]
         [Route("login")]
-        public ActionResult Login([FromBody] UserLogin dto)
+        public ActionResult Login([FromBody] UserLoginDto dto)
         {
             string tokenGenerated = _accountService.GenerateJwt(dto);
-            var user = new UserToken()
+            var user = new UserTokenDto()
             {
                 Token = tokenGenerated
             };

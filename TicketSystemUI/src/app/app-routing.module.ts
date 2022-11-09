@@ -6,13 +6,15 @@ import { TicketComponent } from './ticket/ticket.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AdminpanelComponent } from './adminpanel/adminpanel.component';
+import { UserTicketsComponent } from './user-tickets/user-tickets.component';
 
 
 const routes: Routes = [
-  { path: '', component: TicketComponent},
-  { path: 'login', component: LoginComponent},
-  { path: 'register', component: RegisterComponent},
-  { path: 'admin', component: AdminpanelComponent}
+  { path: '', component: TicketComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'admin', component: AdminpanelComponent },
+  { path: 'userTickets', component: UserTicketsComponent }
 ];
 
 
@@ -29,4 +31,4 @@ const routes: Routes = [
 })
 export class AppRoutingModule { }
 
-export const routingComponents = [TicketComponent, LoginComponent, RegisterComponent, AdminpanelComponent]
+export const routingComponents = [TicketComponent, LoginComponent, RegisterComponent, AdminpanelComponent, UserTicketsComponent]

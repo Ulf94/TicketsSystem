@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,9 +13,15 @@ export class TicketApiService {
 
   constructor(private http: HttpClient) { }
 
-  getTicketsList(): Observable<any[]> {
+  getTickets(): Observable<any[]> {
     return this.http.get<any>(this.ticketAPIUrl + '/tickets');
   }
+
+  getTicketsByResponsibleUserID(): Observable<any[]> {
+    console.log("get tickets by user id");
+    return this.http.get<any>(this.ticketAPIUrl + '/tickets/byresponsibleuser');
+  }
+
 
   addTicket(data: any) {
     return this.http.post(this.ticketAPIUrl + '/tickets', data);

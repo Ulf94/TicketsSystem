@@ -14,7 +14,6 @@ export class TicketComponent implements OnInit {
   constructor(private service: TicketApiService) { }
 
   ngOnInit(): void {
-    this.ticketList$ = this.service.getTicketsList();
   }
 
 }

@@ -1,4 +1,5 @@
 import { Input, Component, OnInit } from '@angular/core';
+import { tick } from '@angular/core/testing';
 import { Observable } from 'rxjs';
 import { TicketApiService } from 'src/app/services/ticket-api.service';
 import { UserService } from 'src/app/services/user.service';
@@ -23,18 +24,20 @@ export class AddEditTicketComponent implements OnInit {
   ticketName: string = "";
   categoryTypeId: number = 0;
   ticketDescription: string = "";
-  status: string = "";
+  statusId: number = 0;
   addedByUserId: number = 0;
+  responsibleUserId: number = 0;
 
   ngOnInit(): void {
     this.id = this.ticket.id;
     this.ticketName = this.ticket.ticketName;
     this.categoryTypeId = this.ticket.categoryTypeId;
     this.ticketDescription = this.ticket.ticketDescription;
-    this.status = this.ticket.status;
+    this.statusId = this.ticket.statusId;
     this.addedByUserId = this.ticket.addedByUserId;
+    this.responsibleUserId = this.ticket.responsibleUserId;
     this.statusList$ = this.service.getStatusList();
-    this.ticketList$ = this.service.getTicketsList();
+    //this.ticketList$ = this.service.getTicketsList();
     this.categoryTypesList$ = this.service.getCategoryTypesList();
   }
 
@@ -44,7 +47,7 @@ export class AddEditTicketComponent implements OnInit {
       ticketName: this.ticketName,
       ticketDescription: this.ticketDescription,
       categoryTypeId: this.categoryTypeId,
-      status: this.status,
+      status: this.statusId,
       addedByUserId: this.userService.getUserId(),
       responsibleUserId: null// todo
     }
@@ -91,12 +94,13 @@ export class AddEditTicketComponent implements OnInit {
       ticketName: this.ticketName,
       ticketDescription: this.ticketDescription,
       categoryTypeId: this.categoryTypeId,
-      status: this.status,
+      statusId: this.statusId,
       addedByUserId: this.addedByUserId,
-      responsibleUserId: null// todo
+      responsibleUserId: this.responsibleUserId
     }
+    console.log(ticket);
     var id: number = this.id;
-    this.service.updateTicket(id, ticket).subscribe(resulet => {
+    this.service.updateTicket(id, ticket).subscribe(result => {
       var closeModalBtn = document.getElementById('add-edit-modal-close');
       if (closeModalBtn) {
         closeModalBtn.click();

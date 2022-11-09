@@ -4,11 +4,10 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using TicketSystemAPI.Models;
+using TicketSystemAPI.Entities.Dto;
 using TicketSystemAPI.Data;
 using TicketSystemAPI.Entities;
 using TicketSystemAPI.Exceptions;
@@ -18,7 +17,7 @@ namespace TicketSystemAPI.Services
     public interface IAccountService
     {
         void RegisterUser(UserRegisterDto dto);
-        string GenerateJwt(UserLogin dto);
+        string GenerateJwt(UserLoginDto dto);
     }
     public class AccountService : IAccountService
     {
@@ -37,7 +36,7 @@ namespace TicketSystemAPI.Services
             var newUser = new User()
             {
                 Email = dto.Email,
-                RoleId = dto.RoleId,
+                RoleId = 1,
                 FirstName = dto.FirstName,
                 LastName = dto.LastName,
                 DateOfBirth = dto.DateOfBirth,
@@ -57,7 +56,7 @@ namespace TicketSystemAPI.Services
             _dataContext.SaveChanges();
         }
 
-        public string GenerateJwt(UserLogin dto)
+        public string GenerateJwt(UserLoginDto dto)
         {
             var user = _dataContext.Users
                 .Include(u => u.Role)

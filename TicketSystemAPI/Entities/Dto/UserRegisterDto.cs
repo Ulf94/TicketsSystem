@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TicketSystemAPI.Models
+namespace TicketSystemAPI.Entities.Dto
 {
     public class UserRegisterDto
     {

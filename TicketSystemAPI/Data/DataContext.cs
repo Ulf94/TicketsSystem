@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System;
 using TicketSystemAPI.Entities;
-using TicketSystemAPI.Models;
 
 namespace TicketSystemAPI.Data
 {

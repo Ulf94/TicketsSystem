@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TicketSystemAPI.Entities
+namespace TicketSystemAPI.Entities.Dto
 {
     public class UserPatchRequestDto
     {

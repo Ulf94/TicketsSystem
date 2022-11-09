@@ -29,6 +29,7 @@ export class ShowTicketComponent implements OnInit {
   ticketDescription: string = "";
   status: string = "";
   addedByUserId: number = 0;
+  currentUserId: string | null = "";
 
 
 
@@ -38,13 +39,21 @@ export class ShowTicketComponent implements OnInit {
     public userService: UserService) { }
 
   ngOnInit(): void {
-    this.ticketList$ = this.service.getTicketsList();
+    this.currentUserId = localStorage.getItem("userId");
     this.categoryTypesList$ = this.service.getCategoryTypesList();
     this.statusList$ = this.service.getStatusList();
     this.usersList$ = this.userService.getUsersList();
     this.refreshCategoryTypesMap();
     this.refreshStatusMap();
     this.refreshUsersMap();
+    this.service.getTicketsByResponsibleUserID();
+    if (localStorage.getItem("userId") != null)
+      this.ticketList$ = this.service.getTickets();
+    else
+      this.ticketList$ = this.service.getTickets();
+
+
+
   }
 
 
@@ -104,17 +113,16 @@ export class ShowTicketComponent implements OnInit {
   modalAssign(item: any) {
     this.ticket = item;
     this.modalTitle = "Assign ticket";
-    console.log(this.ticket)
-    // if(confirm('Are you sure you want to add ticket to your list?')){
-
-
-    //   this.service.assignTicket(this.ticket).subscribe();
-    // }
+    if (confirm('Are you sure you want to add ticket to your list?')) {
+      this.service.assignTicket(this.ticket).subscribe(response => {
+        this.ticketList$ = this.service.getTickets();
+      });
+    }
   }
 
   modalClose() {
     this.activateAddEditTicketComponent = false;
-    this.ticketList$ = this.service.getTicketsList();
+    this.ticketList$ = this.service.getTickets();
   }
 
   deleteTicket(item: any) {
@@ -135,7 +143,7 @@ export class ShowTicketComponent implements OnInit {
             showDeleteSuccess.style.display = "none";
           }
         }, 4000);
-        this.ticketList$ = this.service.getTicketsList();
+        this.ticketList$ = this.service.getTickets();
       });
     }
   }

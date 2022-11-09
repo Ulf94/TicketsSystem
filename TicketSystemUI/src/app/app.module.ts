@@ -17,6 +17,7 @@ import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { RegisterComponent } from './register/register.component';
 import { AdminpanelComponent } from './adminpanel/adminpanel.component';
 import { EditUserComponent } from './adminpanel/edit-user/edit-user.component';
+import { UserTicketsComponent } from './user-tickets/user-tickets.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { EditUserComponent } from './adminpanel/edit-user/edit-user.component';
     routingComponents,
     RegisterComponent,
     AdminpanelComponent,
-    EditUserComponent
+    EditUserComponent,
+    UserTicketsComponent
   ],
   imports: [
     BrowserModule,

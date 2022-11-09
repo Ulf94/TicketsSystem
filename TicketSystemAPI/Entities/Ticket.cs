@@ -17,5 +17,6 @@ namespace TicketSystemAPI
         public User AddedByUser { get; set; }
         public int? ResponsibleUserId { get; set; } = null!;
         public User ResponsibleUser{ get; set; }
+
     }
 }

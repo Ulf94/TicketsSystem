@@ -37,7 +37,6 @@ export class AddEditTicketComponent implements OnInit {
     this.addedByUserId = this.ticket.addedByUserId;
     this.responsibleUserId = this.ticket.responsibleUserId;
     this.statusList$ = this.service.getStatusList();
-    //this.ticketList$ = this.service.getTicketsList();
     this.categoryTypesList$ = this.service.getCategoryTypesList();
   }
 

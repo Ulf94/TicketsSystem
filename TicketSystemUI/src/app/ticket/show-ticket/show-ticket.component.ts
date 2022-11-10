@@ -46,20 +46,13 @@ export class ShowTicketComponent implements OnInit {
     this.refreshCategoryTypesMap();
     this.refreshStatusMap();
     this.refreshUsersMap();
-    this.service.getTicketsByResponsibleUserID();
-    if (localStorage.getItem("userId") != null)
-      this.ticketList$ = this.service.getTickets();
-    else
-      this.ticketList$ = this.service.getTickets();
-
-
-
+    this.ticketList$ = this.service.getTickets();
   }
-
 
   //Variables (properties)
   modalTitle: string = '';
   activateAddEditTicketComponent: boolean = false;
+  showTicketDetails: boolean = false;
 
 
   refreshCategoryTypesMap() {
@@ -104,6 +97,12 @@ export class ShowTicketComponent implements OnInit {
     this.activateAddEditTicketComponent = true;
   }
 
+  modalShowDetails(item: any) {
+    this.ticket = item;
+    this.modalTitle = "Ticket: " + this.ticket.ticketName;
+    this.showTicketDetails = true;
+  }
+
   modalEdit(item: any) {
     this.ticket = item;
     this.modalTitle = "Edit ticket";
@@ -122,6 +121,7 @@ export class ShowTicketComponent implements OnInit {
 
   modalClose() {
     this.activateAddEditTicketComponent = false;
+    this.showTicketDetails = false;
     this.ticketList$ = this.service.getTickets();
   }
 

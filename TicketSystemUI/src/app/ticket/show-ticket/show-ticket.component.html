@@ -33,15 +33,19 @@
   <tbody>
     <tr *ngFor="let item of ticketList$|async">
       <td>{{item.id}}</td>
-      <td>{{item.ticketName}}</td>
+      <td>
+        <div type="button"
+             data-bs-toggle="modal"
+             data-bs-target="#staticBackdrop"
+             (click)="modalShowDetails(item)">{{item.ticketName}}</div>
+      </td>
       <td>{{categoryTypesMap.get(item.categoryTypeId)}}</td>
       <td>{{item.ticketDescription}}</td>
       <td>{{statusMap.get(item.statusId)}}</td>
       <td *ngIf="this.userService.isAuthenticated == true">{{usersMap.get(item.responsibleUserId)}}</td>
       <td *ngIf="this.userService.isAuthenticated == true">{{usersMap.get(item.addedByUserId)}}</td>
       <td>
-        <div
-             *ngIf="this.userService.isAuthenticated == true && (this.userService.loggedRole == 'Admin'  || this.item.responsibleUserId == currentUserId)">
+        <div *ngIf="this.userService.isAuthenticated == true && this.userService.loggedRole == 'Admin'">
           <button class="btn btn-outline-primary me-2 mb-1"
                   (click)="modalEdit(item)"
                   data-bs-toggle="modal"
@@ -144,6 +148,36 @@
       <div class="modal-body">
         <app-add-edit-ticket [ticket]="ticket"
                              *ngIf="activateAddEditTicketComponent"></app-add-edit-ticket>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Show ticket's detail modal -->
+<div class="modal fade"
+     id="staticBackdrop"
+     data-bs-backdrop="static"
+     data-bs-keyboard="false"
+     tabindex="-1"
+     aria-labelledby="staticBackdropLabel"
+     aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"
+            id="staticBackdropLabel">{{modalTitle}}</h5>
+        <button type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+                (click)="modalClose()"
+                id="app-ticket-details-close"></button>
+        <!-- Tu sie zatrzymalem... Nie dziala wyswietlanie szczegolow ticketa -->
+      </div>
+      <div class="modal-body">
+        <app-ticket-details [ticket]="ticket"
+                            *ngIf="showTicketDetails == true">fsadfasdf</app-ticket-details>
       </div>
     </div>
   </div>

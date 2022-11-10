@@ -17,24 +17,24 @@ import { UserService } from '../services/user.service';
 })
 export class RegisterComponent implements OnInit {
 
-  constructor(private http: HttpClient, 
+  constructor(private http: HttpClient,
     private userService: UserService,
     private router: Router) { }
 
-  userRegisteredSuccessfully : boolean = false;
+  userRegisteredSuccessfully: boolean = false;
 
-  public countries:any = countries
-  
-    ngOnInit(): void {
-      this.userRegisteredSuccessfully = false
+  public countries: any = countries
+
+  ngOnInit(): void {
+    this.userRegisteredSuccessfully = false
 
   }
 
-  
 
-  onSubmit(f: NgForm){
+
+  onSubmit(f: NgForm) {
     this.userService.registerUser(f.value).subscribe(
-      res =>{
+      res => {
         var showRegisteredSuccess = document.getElementById('register-success-alert');
         if (showRegisteredSuccess) {
           showRegisteredSuccess.style.display = "block";
@@ -47,7 +47,7 @@ export class RegisterComponent implements OnInit {
       },
       err => {
         //What do do here ? 
-      }  
+      }
     );
   }
 

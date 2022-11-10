@@ -69,7 +69,7 @@ namespace TicketSystem.Tests.TicketControllerTests
         }
 
         [Fact]
-        public async Task Delete_ForNonTicketOwner_ReturnsForbidden()
+        public async Task Delete_ForAdmin_ReturnsOK()
         {
             //arrange
             var ticket = new Ticket()
@@ -82,7 +82,7 @@ namespace TicketSystem.Tests.TicketControllerTests
             //act 
             var response = await _client.DeleteAsync("/api/tickets/" + ticket.Id);
             //assert
-            response.StatusCode.Should().Be(System.Net.HttpStatusCode.Forbidden);
+            response.StatusCode.Should().Be(System.Net.HttpStatusCode.OK);
         }
 
 

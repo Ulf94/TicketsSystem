@@ -19,18 +19,28 @@ namespace TicketSystemAPI.Controllers
     {
         private readonly DataContext _context;
         private readonly IAccountService _accountService;
+        private readonly ITokenService _tokenService;
 
-        public UsersController(DataContext context, IAccountService accountService)
+        public UsersController(DataContext context, IAccountService accountService, ITokenService tokenService)
         {
             _context = context;
             _accountService = accountService;
+            _tokenService = tokenService;   
         }
 
         // GET: api/Users
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        public async Task<ActionResult<List<UserDto>>> GetUsers()
         {
-            return await _context.Users.ToListAsync();
+            var users = await _context.Users.Select(u => new UserDto
+            {
+                Id = u.Id,
+                FirstName = u.FirstName,
+                LastName = u.LastName,
+                RoleId = u.RoleId,
+            }).ToListAsync();
+
+            return users;
         }
 
         // GET: api/Users/5
@@ -163,7 +173,7 @@ namespace TicketSystemAPI.Controllers
         [Route("login")]
         public ActionResult Login([FromBody] UserLoginDto dto)
         {
-            string tokenGenerated = _accountService.GenerateJwt(dto);
+            string tokenGenerated = _tokenService.GenerateJwt(dto);
             var user = new UserTokenDto()
             {
                 Token = tokenGenerated

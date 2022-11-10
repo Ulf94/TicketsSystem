@@ -6,7 +6,7 @@ import { TicketComponent } from './ticket/ticket.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AdminpanelComponent } from './adminpanel/adminpanel.component';
-import { UserTicketsComponent } from './user-tickets/user-tickets.component';
+import { UserTicketsComponent } from './ticket/user-tickets/user-tickets.component';
 
 
 const routes: Routes = [

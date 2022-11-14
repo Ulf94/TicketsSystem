@@ -12,7 +12,13 @@
     <tbody>
         <tr *ngFor="let item of ticketList$|async">
             <td>{{item.id}}</td>
-            <td>{{item.ticketName}}</td>
+            <td>
+                <div type="button"
+                     style="font-weight: bold"
+                     data-bs-toggle="modal"
+                     data-bs-target="#showDetail"
+                     (click)="modalShowDetails(item)">{{item.ticketName}}</div>
+            </td>
             <td>{{categoryTypesMap.get(item.categoryTypeId)}}</td>
             <td>{{item.ticketDescription}}</td>
             <td>{{statusMap.get(item.statusId)}}</td>
@@ -69,3 +75,32 @@
         </div>
     </div>
 </div>
+
+
+<!-- Ticket details modal -->
+<!-- <div class="modal fade"
+     id="showDetail"
+     data-bs-backdrop="static"
+     data-bs-keyboard="false"
+     tabindex="-1"
+     aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"
+                    id="showDetailLabel">{{modalTitle}}</h5>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                        (click)="modalClose()"
+                        id="ticket-detail-modal-close"></button>
+            </div>
+            <div class="modal-body">
+                <app-ticket-details-user-list [ticket]="ticket"
+                                              *ngIf="showTicketDetails"></app-ticket-details-user-list>
+            </div>
+        </div>
+    </div>
+</div> -->

@@ -1,60 +1,60 @@
 <form>
 
-  <div class="mb-3">
-    <label for="ticketName"
-           class="form-label">Ticket name</label>
-    <input type="text"
-           class="form-control"
-           [(ngModel)]="ticketName"
-           name="ticketName"
-           [maxlength]="20"
-           #uname="ngModel" />
-  </div>
+       <div class="mb-3">
+              <label for="ticketName"
+                     class="form-label">Ticket name</label>
+              <input type="text"
+                     class="form-control"
+                     [(ngModel)]="ticketName"
+                     name="ticketName"
+                     [maxlength]="20"
+                     #uname="ngModel" />
+       </div>
 
-  <div class="mb-3">
-    <label for="categoryTypeId"
-           class="form-label">Category type</label>
-    <select class="form-control"
-            name="categoryTypeId"
-            id="categoryTypeId"
-            [(ngModel)]="categoryTypeId">
-      <option *ngFor="let type of categoryTypesList$|async"
-              [value]="type.id">{{type.categoryName}}</option>
-    </select>
-  </div>
-  <div class="mb-3"
-       *ngIf="ticket.id!=0">
-    <label for="statusId"
-           class="form-label">Status</label>
-    <select class="form-control"
-            name="statusId"
-            id="statusId"
-            [(ngModel)]="statusId">
-      <option *ngFor="let status of statusList$|async"
-              [value]="status.id">{{status.statusOption}}</option>
-    </select>
-  </div>
+       <div class="mb-3">
+              <label for="categoryTypeId"
+                     class="form-label">Category type</label>
+              <select class="form-control"
+                      name="categoryTypeId"
+                      id="categoryTypeId"
+                      [(ngModel)]="categoryTypeId">
+                     <option *ngFor="let type of categoryTypesList$|async"
+                             [value]="type.id">{{type.categoryName}}</option>
+              </select>
+       </div>
+       <div class="mb-3"
+            *ngIf="ticket.id!=0">
+              <label for="statusId"
+                     class="form-label">Status</label>
+              <select class="form-control"
+                      name="statusId"
+                      id="statusId"
+                      [(ngModel)]="statusId">
+                     <option *ngFor="let status of statusList$|async"
+                             [value]="status.id">{{status.statusOption}}</option>
+              </select>
+       </div>
 
-  <div class="mb-3">
-    <label for="ticketDescription"
-           class="form-label">Description</label>
-    <input type="text"
-           class="form-control"
-           [(ngModel)]="ticketDescription"
-           name="ticketDescription" />
-  </div>
+       <div class="mb-3">
+              <label for="ticketDescription"
+                     class="form-label">Description</label>
+              <input type="text"
+                     class="form-control"
+                     [(ngModel)]="ticketDescription"
+                     name="ticketDescription" />
+       </div>
 
-  <button (click)="addTicket()"
-          *ngIf="ticket.id==0"
-          class="btn btn-primary">
-    Add
-  </button>
+       <button (click)="addTicket()"
+               *ngIf="ticket.id==0"
+               class="btn btn-primary">
+              Add
+       </button>
 
 
-  <button (click)="updateTicket()"
-          *ngIf="ticket.id!=0"
-          class="btn btn-secondary">
-    Update
-  </button>
+       <button (click)="updateTicket()"
+               *ngIf="ticket.id!=0"
+               class="btn btn-secondary pull-left">
+              Update
+       </button>
 
 </form>

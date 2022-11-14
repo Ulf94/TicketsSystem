@@ -32,11 +32,13 @@ export class UserTicketsComponent implements OnInit {
   createdOn: number = 0;
   modalTitle: string = '';
   activateAddEditTicketComponent: boolean = false;
+  showTicketDetails: boolean = false;
 
 
   constructor(private service: TicketApiService,
     private http: HttpClient,
     public userService: UserService) { }
+
 
   ngOnInit(): void {
     this.categoryTypesList$ = this.service.getCategoryTypesList();
@@ -88,6 +90,16 @@ export class UserTicketsComponent implements OnInit {
   }
   modalClose() {
     this.activateAddEditTicketComponent = false;
+    this.showTicketDetails = false;
     this.ticketList$ = this.service.getTicketsByResponsibleUserID();
+  }
+
+  modalShowDetails(item: any) {
+    this.ticket = item;
+    this.ticket.categoryName = this.categoryTypesMap.get(this.ticket.categoryTypeId);
+    this.ticket.status = this.statusMap.get(this.ticket.statusId);
+    this.ticket.addedByUser = this.usersMap.get(this.ticket.addedByUserId);
+    this.modalTitle = "Ticket: " + this.ticket.ticketName;
+    this.showTicketDetails = true;
   }
 }

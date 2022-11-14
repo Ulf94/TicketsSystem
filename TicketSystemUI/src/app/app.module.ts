@@ -19,6 +19,8 @@ import { AdminpanelComponent } from './adminpanel/adminpanel.component';
 import { EditUserComponent } from './adminpanel/edit-user/edit-user.component';
 import { UserTicketsComponent } from './ticket/user-tickets/user-tickets.component';
 import { TicketDetailsComponent } from './ticket/ticket-details/ticket-details.component';
+import { TicketDetailsUserListComponent } from './ticket/ticket-details-user-list/ticket-details-user-list.component';
+import { SendBackComponentComponent } from './send-back-component/send-back-component.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,9 @@ import { TicketDetailsComponent } from './ticket/ticket-details/ticket-details.c
     AdminpanelComponent,
     EditUserComponent,
     UserTicketsComponent,
-    TicketDetailsComponent
+    TicketDetailsComponent,
+    TicketDetailsUserListComponent,
+    SendBackComponentComponent
   ],
   imports: [
     BrowserModule,

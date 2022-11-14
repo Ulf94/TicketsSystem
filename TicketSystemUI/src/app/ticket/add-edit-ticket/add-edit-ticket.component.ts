@@ -1,9 +1,7 @@
 import { Input, Component, OnInit } from '@angular/core';
-import { tick } from '@angular/core/testing';
 import { Observable } from 'rxjs';
 import { TicketApiService } from 'src/app/services/ticket-api.service';
 import { UserService } from 'src/app/services/user.service';
-
 
 @Component({
   selector: 'app-add-edit-ticket',

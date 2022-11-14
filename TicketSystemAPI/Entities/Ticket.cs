@@ -12,7 +12,7 @@ namespace TicketSystemAPI
         public string TicketDescription { get; set; } = string.Empty;
         public int CategoryTypeId { get; set; }
         public CategoryType CategoryType { get; set; }
-        public int StatusId { get; set; } = 1;
+        public int StatusId { get; set; } = (int)StatusesTypes.Pending;
         public Status Status { get; set; }
         public int AddedByUserId { get; set; }
         public User AddedByUser { get; set; }

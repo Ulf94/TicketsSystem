@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { filter, Observable } from 'rxjs';
 import { TicketApiService } from 'src/app/services/ticket-api.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -17,45 +17,31 @@ export class TicketDetailsComponent implements OnInit {
   ticketList$!: Observable<any[]>;
   statusList$!: Observable<any[]>;
   categoryTypesList$!: Observable<any[]>;
+  categoryTypesMap: Map<number, string> = new Map();
+  categoryTypesList: any = [];
 
   @Input() ticket: any;
   id: number = 0;
   ticketName: string = "";
   categoryTypeId: number = 0;
+  categoryName: string = "";
   ticketDescription: string = "";
-  statusId: number = 0;
-  addedByUserId: number = 0;
-  responsibleUserId: number = 0;
+  status: string = "";
+  addedByUser: string = "";
+  responsibleUser: string = "";
   createdOn: number = 0;
 
   ngOnInit(): void {
     this.id = this.ticket.id;
     this.ticketName = this.ticket.ticketName;
-    this.categoryTypeId = this.ticket.categoryTypeId;
+    this.categoryName = this.ticket.categoryName;
     this.ticketDescription = this.ticket.ticketDescription;
-    this.statusId = this.ticket.statusId;
-    this.addedByUserId = this.ticket.addedByUserId;
-    this.responsibleUserId = this.ticket.responsibleUserId;
+    this.status = this.ticket.status;
+    this.addedByUser = this.ticket.addedByUser;
+    this.responsibleUser = this.ticket.responsibleUser;
     this.createdOn = this.ticket.createdOn;
     this.statusList$ = this.service.getStatusList();
-    this.categoryTypesList$ = this.service.getCategoryTypesList();
-    console.log(this.ticket);
+    this.categoryTypesList = this.service.getCategoryTypesList();
+    console.log("Ticket received in detailed view: " + this.ticket.id);;
   }
-
-
-  // showDetails() {
-  //   var ticket = {
-  //     id: this.id,
-  //     ticketName: this.ticketName,
-  //     ticketDescription: this.ticketDescription,
-  //     categoryTypeId: this.categoryTypeId,
-  //     statusId: this.statusId,
-  //     addedByUserId: this.addedByUserId,
-  //     responsibleUserId: this.responsibleUserId,
-  //     createdOn = this.createdOn,
-  //   }
-  //   console.log(ticket);
-  // }
-
-
 }

@@ -29,6 +29,7 @@ namespace TaskSystemAPI.Functions.Tickets.Command
                 if (entity != null)
                 {
                     entity.ResponsibleUserId = (int)_userContextService.GetUserId;
+                    entity.StatusId = (int)StatusesTypes.In_progress;
                 }
                 await _context.SaveChangesAsync(cancellationToken);
                 return entity;

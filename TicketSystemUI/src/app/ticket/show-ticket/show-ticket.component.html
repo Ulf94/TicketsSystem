@@ -20,30 +20,31 @@
 
 <table class="table table-striped">
   <thead>
-    <th>Id</th>
+    <!-- <th>Id</th> -->
     <th>Ticket name</th>
     <th>Category</th>
     <th>Description</th>
     <th>Status</th>
     <th *ngIf="this.userService.isAuthenticated == true">Responsible user</th>
-    <th *ngIf="this.userService.isAuthenticated == true">Created by</th>
+    <!-- <th *ngIf="this.userService.isAuthenticated == true">Created by</th> -->
     <th *ngIf="this.userService.isAuthenticated == true && this.userService.loggedRole != 'Admin'">Options</th>
     <th *ngIf="this.userService.isAuthenticated == true && this.userService.loggedRole == 'Admin'">Options</th>
   </thead>
   <tbody>
     <tr *ngFor="let item of ticketList$|async">
-      <td>{{item.id}}</td>
+      <!-- <td>{{item.id}}</td> -->
       <td>
         <div type="button"
+             style="font-weight: bold"
              data-bs-toggle="modal"
-             data-bs-target="#staticBackdrop"
+             data-bs-target="#showDetail"
              (click)="modalShowDetails(item)">{{item.ticketName}}</div>
       </td>
       <td>{{categoryTypesMap.get(item.categoryTypeId)}}</td>
       <td>{{item.ticketDescription}}</td>
       <td>{{statusMap.get(item.statusId)}}</td>
       <td *ngIf="this.userService.isAuthenticated == true">{{usersMap.get(item.responsibleUserId)}}</td>
-      <td *ngIf="this.userService.isAuthenticated == true">{{usersMap.get(item.addedByUserId)}}</td>
+      <!-- <td *ngIf="this.userService.isAuthenticated == true">{{usersMap.get(item.addedByUserId)}}</td> -->
       <td>
         <div *ngIf="this.userService.isAuthenticated == true && this.userService.loggedRole == 'Admin'">
           <button class="btn btn-outline-primary me-2 mb-1"
@@ -80,9 +81,10 @@
             </svg>
           </button>
         </div>
-        <div *ngIf="this.userService.isAuthenticated == true && this.item.responsibleUserId == null">
+        <div
+             *ngIf="this.userService.isAuthenticated == true && this.item.responsibleUserId == null && this.item.statusId != 3">
           <button class="btn me-1 mb-1"
-                  (click)="modalAssign(item)">
+                  (click)="funcAssignTicket(item)">
             <svg xmlns="http://www.w3.org/2000/svg"
                  width="16"
                  height="16"
@@ -154,30 +156,29 @@
 </div>
 
 
-<!-- Show ticket's detail modal -->
+<!-- Ticket details modal -->
 <div class="modal fade"
-     id="staticBackdrop"
+     id="showDetail"
      data-bs-backdrop="static"
      data-bs-keyboard="false"
      tabindex="-1"
-     aria-labelledby="staticBackdropLabel"
+     aria-labelledby="exampleModalLabel"
      aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title"
-            id="staticBackdropLabel">{{modalTitle}}</h5>
+            id="showDetailLabel">{{modalTitle}}</h5>
         <button type="button"
                 class="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
                 (click)="modalClose()"
-                id="app-ticket-details-close"></button>
-        <!-- Tu sie zatrzymalem... Nie dziala wyswietlanie szczegolow ticketa -->
+                id="ticket-detail-modal-close"></button>
       </div>
       <div class="modal-body">
         <app-ticket-details [ticket]="ticket"
-                            *ngIf="showTicketDetails == true">fsadfasdf</app-ticket-details>
+                            *ngIf="showTicketDetails"></app-ticket-details>
       </div>
     </div>
   </div>

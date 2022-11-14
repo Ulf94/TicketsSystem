@@ -99,6 +99,9 @@ export class ShowTicketComponent implements OnInit {
 
   modalShowDetails(item: any) {
     this.ticket = item;
+    this.ticket.categoryName = this.categoryTypesMap.get(this.ticket.categoryTypeId);
+    this.ticket.status = this.statusMap.get(this.ticket.statusId);
+    this.ticket.addedByUser = this.usersMap.get(this.ticket.addedByUserId);
     this.modalTitle = "Ticket: " + this.ticket.ticketName;
     this.showTicketDetails = true;
   }
@@ -109,7 +112,7 @@ export class ShowTicketComponent implements OnInit {
     this.activateAddEditTicketComponent = true;
   }
 
-  modalAssign(item: any) {
+  funcAssignTicket(item: any) {
     this.ticket = item;
     this.modalTitle = "Assign ticket";
     if (confirm('Are you sure you want to add ticket to your list?')) {

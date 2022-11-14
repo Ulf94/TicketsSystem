@@ -20,10 +20,7 @@ namespace TicketSystemAPI.Functions.Tickets.Query
             List<TicketUnauthorizedDto> ticketsList = _dataContext.Tickets.Select(x => new TicketUnauthorizedDto
             {
                 Id = x.Id,
-                TicketName = x.TicketName,
-                TicketDescription = x.TicketDescription,
-                CategoryTypeId = x.CategoryTypeId,
-                StatusId = x.StatusId 
+                TicketName = x.TicketName
             }).ToList();
 
             return Task.FromResult(ticketsList);

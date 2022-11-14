@@ -59,7 +59,7 @@ namespace TicketSystemAPI.Controllers
 
         // GET: api/Tickets/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Ticket>> GetTicket(int id)
+        public async Task<ActionResult<TicketDto>> GetTicket(int id)
         {
             var request = new GetTicketByIdQuery { Id = id };
             var ticket = await _mediator.Send(request);

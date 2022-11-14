@@ -28,7 +28,18 @@ namespace TaskSystemAPI.Functions.Tickets.Command
                     entity.CategoryTypeId = request.CategoryTypeId;
                     entity.TicketDescription = request.TicketDescription;
                     entity.StatusId = request.StatusId;
-                    entity.ResponsibleUserId = request.ResponsibleUserId;
+                    switch (entity.StatusId)
+                    {
+                        case (int)StatusesTypes.Pending:
+                            entity.ResponsibleUserId = null;
+                            break;
+                        case (int)StatusesTypes.In_progress:
+                            entity.ResponsibleUserId = request.ResponsibleUserId;
+                            break;
+                        case (int)StatusesTypes.Done:
+                            entity.ResponsibleUserId = null;
+                            break;
+                    }
                 }
                 await _context.SaveChangesAsync(cancellationToken);
                 return entity;

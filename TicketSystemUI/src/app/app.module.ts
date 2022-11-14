@@ -17,7 +17,8 @@ import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { RegisterComponent } from './register/register.component';
 import { AdminpanelComponent } from './adminpanel/adminpanel.component';
 import { EditUserComponent } from './adminpanel/edit-user/edit-user.component';
-import { UserTicketsComponent } from './user-tickets/user-tickets.component';
+import { UserTicketsComponent } from './ticket/user-tickets/user-tickets.component';
+import { TicketDetailsComponent } from './ticket/ticket-details/ticket-details.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { UserTicketsComponent } from './user-tickets/user-tickets.component';
     RegisterComponent,
     AdminpanelComponent,
     EditUserComponent,
-    UserTicketsComponent
+    UserTicketsComponent,
+    TicketDetailsComponent
   ],
   imports: [
     BrowserModule,

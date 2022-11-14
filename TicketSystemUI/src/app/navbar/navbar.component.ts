@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { UserService } from '../services/user.service';
-import { map} from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 
 export const isLogged = false;
@@ -16,7 +16,7 @@ export const isLogged = false;
 export class NavbarComponent implements OnInit {
 
   constructor(public userService: UserService,
-            private router: Router) { }
+    private router: Router) { }
 
   loggedUserName$!: string | null;
 
@@ -24,7 +24,7 @@ export class NavbarComponent implements OnInit {
     this.userService.currentUser();
   }
 
-  logoutAction():any{
+  logoutAction(): any {
     this.userService.logoutUser();
   }
 }

@@ -78,6 +78,7 @@ namespace TicketSystemAPI
             services.AddScoped<IAuthorizationHandler, ResourceOperationRequirementHandler>();
             services.AddScoped<IUserContextService, UserContextService>();
             services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<ITokenService, TokenService>();
             services.AddHttpContextAccessor();
 
             services.AddCors(options =>

@@ -27,7 +27,8 @@ namespace TaskSystemAPI.Functions.Tickets.Command
                 TicketName = request.TicketName,
                 CategoryTypeId = request.CategoryTypeId,
                 TicketDescription = request.TicketDescription,
-                AddedByUserId = (int)_userContextService.GetUserId
+                AddedByUserId = (int)_userContextService.GetUserId,
+                CreatedOn = System.DateTime.Now
             };
             _context.Tickets.Add(createdTicket);
 

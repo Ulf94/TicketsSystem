@@ -45,7 +45,7 @@ namespace TicketSystemAPI
                         FirstName = "admin",
                         LastName = "admin",
                         Nationality = "admin",
-                        RoleId = 3
+                        RoleId = (int)RoleTypes.Admin
                     };
                     string hashedPassword = _passwordHasher.HashPassword(admin, "admin123");
 
@@ -107,7 +107,7 @@ namespace TicketSystemAPI
                 },
                 new Status()
                 {
-                    StatusOption = "Finished"
+                    StatusOption = "Done"
                 },
             };
 

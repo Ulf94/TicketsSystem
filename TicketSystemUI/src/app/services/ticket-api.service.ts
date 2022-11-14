@@ -18,7 +18,6 @@ export class TicketApiService {
   }
 
   getTicketsByResponsibleUserID(): Observable<any[]> {
-    console.log("get tickets by user id");
     return this.http.get<any>(this.ticketAPIUrl + '/tickets/byresponsibleuser');
   }
 

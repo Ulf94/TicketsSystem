@@ -46,20 +46,13 @@ export class ShowTicketComponent implements OnInit {
     this.refreshCategoryTypesMap();
     this.refreshStatusMap();
     this.refreshUsersMap();
-    this.service.getTicketsByResponsibleUserID();
-    if (localStorage.getItem("userId") != null)
-      this.ticketList$ = this.service.getTickets();
-    else
-      this.ticketList$ = this.service.getTickets();
-
-
-
+    this.ticketList$ = this.service.getTickets();
   }
-
 
   //Variables (properties)
   modalTitle: string = '';
   activateAddEditTicketComponent: boolean = false;
+  showTicketDetails: boolean = false;
 
 
   refreshCategoryTypesMap() {
@@ -104,13 +97,22 @@ export class ShowTicketComponent implements OnInit {
     this.activateAddEditTicketComponent = true;
   }
 
+  modalShowDetails(item: any) {
+    this.ticket = item;
+    this.ticket.categoryName = this.categoryTypesMap.get(this.ticket.categoryTypeId);
+    this.ticket.status = this.statusMap.get(this.ticket.statusId);
+    this.ticket.addedByUser = this.usersMap.get(this.ticket.addedByUserId);
+    this.modalTitle = "Ticket: " + this.ticket.ticketName;
+    this.showTicketDetails = true;
+  }
+
   modalEdit(item: any) {
     this.ticket = item;
     this.modalTitle = "Edit ticket";
     this.activateAddEditTicketComponent = true;
   }
 
-  modalAssign(item: any) {
+  funcAssignTicket(item: any) {
     this.ticket = item;
     this.modalTitle = "Assign ticket";
     if (confirm('Are you sure you want to add ticket to your list?')) {
@@ -122,6 +124,7 @@ export class ShowTicketComponent implements OnInit {
 
   modalClose() {
     this.activateAddEditTicketComponent = false;
+    this.showTicketDetails = false;
     this.ticketList$ = this.service.getTickets();
   }
 

@@ -1,0 +1,38 @@
+<form>
+
+    <div class="mb-3">
+        <label for="ticketDescription"
+               class="form-label me-2">Description: </label>
+        <div style="border-style: solid; border-width: thin; border-color: black;
+               min-height: 150px; border-radius: 10pt;">
+            <div for="ticketDescription"
+                 class="form-label m-2">{{ticketDescription}}</div>
+        </div>
+
+    </div>
+
+    <div class="mb-3">
+        <label for="categoryTypeId"
+               class="form-label me-2">Category type: </label>
+        <label for="categoryTypeId"
+               class="form-label">{{categoryName}}</label>
+    </div>
+
+
+    <div class="mb-3">
+        <label for="status"
+               class="form-label me-2">Status: </label>
+        <label for="status"
+               class="form-label">{{status}}</label>
+    </div>
+
+    <div class="mb-3">
+        <label for="createdBy"
+               class="form-label me-2">Created by: {{addedByUser}} on {{createdOn | date:'d/MM/YY'}} </label>
+    </div>
+
+
+
+
+
+</form>

@@ -40,11 +40,15 @@ export class UserService {
     }
   }
 
+  ngOnInit(): void {
+  }
+
 
   loginUser(userLogin: any) {
     return this.http.post(this.ticketAPIUrl + "/Users/login", userLogin).subscribe((res: any) => {
       this.isAuthenticated = true;
       localStorage.setItem('token', res.token);
+      this.currentUser();
       this.router.navigate(['/'])
       this.service.getTickets();
     },
@@ -72,8 +76,8 @@ export class UserService {
         localStorage.setItem('userId', res.userId);
         localStorage.setItem('userName', res.userName);
         localStorage.setItem('userRole', res.userRole);
-        this.loggedUserName = localStorage.getItem("userName");
-        this.loggedRole = localStorage.getItem("userRole");
+        this.loggedUserName = res.userName;
+        this.loggedRole = res.userRole;
         this.isAdministrator();
       }
     );
@@ -133,7 +137,7 @@ export class UserService {
   }
 
   isAdministrator(): boolean {
-    if (localStorage.getItem("userName") == "Admin") {
+    if (localStorage.getItem("userRole") == "Admin") {
       this.isAdmin = true;
       console.log("He's admin")
       return true;

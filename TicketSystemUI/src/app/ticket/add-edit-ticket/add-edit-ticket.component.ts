@@ -1,9 +1,7 @@
 import { Input, Component, OnInit } from '@angular/core';
-import { tick } from '@angular/core/testing';
 import { Observable } from 'rxjs';
 import { TicketApiService } from 'src/app/services/ticket-api.service';
 import { UserService } from 'src/app/services/user.service';
-
 
 @Component({
   selector: 'app-add-edit-ticket',
@@ -37,7 +35,6 @@ export class AddEditTicketComponent implements OnInit {
     this.addedByUserId = this.ticket.addedByUserId;
     this.responsibleUserId = this.ticket.responsibleUserId;
     this.statusList$ = this.service.getStatusList();
-    //this.ticketList$ = this.service.getTicketsList();
     this.categoryTypesList$ = this.service.getCategoryTypesList();
   }
 

@@ -5,11 +5,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using TicketSystemAPI;
 using TicketSystemAPI.Data;
+using TicketSystemAPI.Entities.Dto;
 using TicketSystemAPI.Functions.Tickets.Command;
 
 namespace TaskSystemAPI.Functions.Tickets.Query
 {
-    public class GetAllTicketsQueryHandler : IRequestHandler<GetAllTicketsQuery, List<Ticket>>
+    public class GetAllTicketsQueryHandler : IRequestHandler<GetAllTicketsQuery, List<TicketDto>>
     {
         private readonly DataContext _context;
 
@@ -18,9 +19,19 @@ namespace TaskSystemAPI.Functions.Tickets.Query
             _context = context;
         }
 
-        public Task<List<Ticket>> Handle(GetAllTicketsQuery request, CancellationToken cancellationToken)
+        public Task<List<TicketDto>> Handle(GetAllTicketsQuery request, CancellationToken cancellationToken)
         {
-            var tickets = _context.Tickets.ToList();
+            var tickets = _context.Tickets.Select(t => new TicketDto
+            {
+                Id = t.Id,
+                TicketName = t.TicketName,
+                TicketDescription = t.TicketDescription,
+                CategoryTypeId = t.CategoryTypeId,
+                StatusId = t.StatusId,
+                AddedByUserId = t.AddedByUserId,
+                ResponsibleUserId = t.ResponsibleUserId,
+                CreatedOn = t.CreatedOn,
+            }).ToList();
 
             return Task.FromResult(tickets);
         }

@@ -22,7 +22,8 @@
               [value]="type.id">{{type.categoryName}}</option>
     </select>
   </div>
-  <div class="mb-3">
+  <div class="mb-3"
+       *ngIf="ticket.id!=0">
     <label for="statusId"
            class="form-label">Status</label>
     <select class="form-control"

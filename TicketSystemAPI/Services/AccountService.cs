@@ -22,13 +22,11 @@ namespace TicketSystemAPI.Services
     {
         private readonly DataContext _dataContext;
         private readonly IPasswordHasher<User> _passwordHasher;
-        private readonly AuthenticationSettings _authenticationSettings;
 
-        public AccountService(DataContext dataContext, IPasswordHasher<User> passwordHasher, AuthenticationSettings authenticationSettings)
+        public AccountService(DataContext dataContext, IPasswordHasher<User> passwordHasher)
         {
             _dataContext = dataContext;
             _passwordHasher = passwordHasher;
-            _authenticationSettings = authenticationSettings;
         }
         public void RegisterUser(UserRegisterDto dto)
         {

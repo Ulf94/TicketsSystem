@@ -51,8 +51,12 @@ namespace TicketSystemAPI.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest();
-            var result = await _mediator.Send(new GetTicketsByResponsibleUserIdQuery());
-            return Ok(result);
+            if(_userContextService != null)
+            {
+                var result = await _mediator.Send(new GetTicketsByResponsibleUserIdQuery());
+                return Ok(result);
+            }
+            return NotFound();
         }
 
 

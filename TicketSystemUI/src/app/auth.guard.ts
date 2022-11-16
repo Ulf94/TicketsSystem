@@ -7,7 +7,7 @@ import { userToken } from './models/userToken';
     providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-    constructor(private router: Router, private jwtHelper: JwtHelperService, private http: HttpClient,) { }
+    constructor(private router: Router, private jwtHelper: JwtHelperService, private http: HttpClient) { }
 
     async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         const token = localStorage.getItem("token");

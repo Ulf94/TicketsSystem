@@ -22,10 +22,11 @@ namespace TicketSystemAPI.Services
         public ClaimsPrincipal User => _httpContextAccessor.HttpContext?.User;
 
         public int? GetUserId =>
-            User is null ? null : (int?)int.Parse(User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier).Value);
+           User.Identity.Name is null ? 0 : (int?)int.Parse(User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier).Value);
+        
 
         public int? GetUserRoleId =>
-            User is null ? null : (int?)int.Parse(User.FindFirst(c => c.Type == ClaimTypes.Role).Value);
+            User.Identity.Name is null ? null : (int?)int.Parse(User.FindFirst(c => c.Type == ClaimTypes.Role).Value);
 
 
     }

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { AuthGuard } from '../auth.guard';
 import { UserService } from './user.service';
 
 @Injectable({
@@ -11,7 +12,8 @@ export class TicketApiService {
   //readonly ticketAPIUrl = "https://ticketmanagermaz.azurewebsites.net/api";
   readonly ticketAPIUrl = "https://localhost:44322/api";
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+    private authGuard: AuthGuard) { }
 
   getTickets(): Observable<any[]> {
     return this.http.get<any>(this.ticketAPIUrl + '/tickets');

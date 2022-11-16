@@ -12,6 +12,7 @@ using TicketSystemAPI.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Security.Cryptography;
+using Microsoft.Extensions.Configuration;
 
 namespace TicketSystemAPI.Services
 {
@@ -26,16 +27,22 @@ namespace TicketSystemAPI.Services
     {
         private readonly DataContext _dataContext;
         private readonly IPasswordHasher<User> _passwordHasher;
-        private readonly AuthenticationSettings _authenticationSettings;
-        public TokenService(DataContext dataContext, IPasswordHasher<User> passwordHasher, AuthenticationSettings authenticationSettings)
+        private readonly IConfiguration _configuration;
+        public TokenService(DataContext dataContext, 
+                            IPasswordHasher<User> passwordHasher,
+                            IConfiguration configuration)
         {
             _dataContext = dataContext;
             _passwordHasher = passwordHasher;
-            _authenticationSettings = authenticationSettings;
+            _configuration = configuration;
+            
+
         }
 
         public string GenerateJwt(IEnumerable<Claim> claims)
         {
+            var _authenticationSettings = new AuthenticationSettings();
+            _configuration.GetSection("Authentication").Bind(_authenticationSettings);
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authenticationSettings.JwtKey));
             var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var expires = DateTime.Now.AddMinutes(_authenticationSettings.JwtExpireMinutes);
@@ -51,39 +58,35 @@ namespace TicketSystemAPI.Services
         }
     
 
-    public string GenerateRefreshToken()
-    {
-        var randomNumber = new byte[32];
-        using (var rng = RandomNumberGenerator.Create())
+        public string GenerateRefreshToken()
         {
-            rng.GetBytes(randomNumber);
-            return Convert.ToBase64String(randomNumber);
+            var randomNumber = new byte[32];
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(randomNumber);
+                return Convert.ToBase64String(randomNumber);
+            }
         }
-    }
-    public ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
-    {
-        var authenticationSettings = new AuthenticationSettings()
+        public ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
         {
-            JwtKey = "PRIVATE_KEY_DONT_SHARE",
-            JwtIssuer = "http://ticketsystemapiapi.com"
-        };
-            
-        var tokenValidationParameters = new TokenValidationParameters
-        {
-            RequireExpirationTime = true,
-            ClockSkew = TimeSpan.Zero,
-            ValidIssuer = authenticationSettings.JwtIssuer,
-            ValidAudience = authenticationSettings.JwtIssuer,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authenticationSettings.JwtKey)),
-            ValidateLifetime = false
-        };
-        var tokenHandler = new JwtSecurityTokenHandler();
-        SecurityToken securityToken;
-        var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out securityToken);
-        var jwtSecurityToken = securityToken as JwtSecurityToken;
-        if (jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
-            throw new SecurityTokenException("Invalid token");
-        return principal;
-    }
+            var _authenticationSettings = new AuthenticationSettings();
+            _configuration.GetSection("Authentication").Bind(_authenticationSettings);
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                RequireExpirationTime = true,
+                ClockSkew = TimeSpan.Zero,
+                ValidIssuer = _authenticationSettings.JwtIssuer,
+                ValidAudience = _authenticationSettings.JwtIssuer,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authenticationSettings.JwtKey)),
+                ValidateLifetime = false
+            };
+            var tokenHandler = new JwtSecurityTokenHandler();
+            SecurityToken securityToken;
+            var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out securityToken);
+            var jwtSecurityToken = securityToken as JwtSecurityToken;
+            if (jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+                throw new SecurityTokenException("Invalid token");
+            return principal;
+        }
     }
 }

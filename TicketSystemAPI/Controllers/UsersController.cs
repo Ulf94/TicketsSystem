@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -19,13 +21,17 @@ namespace TicketSystemAPI.Controllers
     {
         private readonly DataContext _context;
         private readonly IAccountService _accountService;
-        private readonly ITokenService _tokenService;
+        private readonly ITokenService _tokenService; 
+        private readonly IPasswordHasher<User> _passwordHasher;
 
-        public UsersController(DataContext context, IAccountService accountService, ITokenService tokenService)
+
+        public UsersController(DataContext context, IAccountService accountService, ITokenService tokenService, IPasswordHasher<User> passwordHasher)
         {
             _context = context;
             _accountService = accountService;
-            _tokenService = tokenService;   
+            _tokenService = tokenService;
+            _passwordHasher = passwordHasher;
+
         }
 
         // GET: api/Users
@@ -149,6 +155,7 @@ namespace TicketSystemAPI.Controllers
 
         [HttpGet]
         [Route("getCurrentUser")]
+        [Authorize(Roles = "Manager, Admin, User ")]
         public async Task<IActionResult> GetCurrentUser()
         {
             if (((ClaimsIdentity)User.Identity).IsAuthenticated == false)
@@ -157,10 +164,11 @@ namespace TicketSystemAPI.Controllers
             var UserId = ((ClaimsIdentity)User.Identity).Claims.ElementAtOrDefault(0).Value;
             var UserName = ((ClaimsIdentity)User.Identity).Claims.ElementAtOrDefault(1).Value;
             var UserRole = ((ClaimsIdentity)User.Identity).Claims.ElementAtOrDefault(2).Value;
+
             var user = new LoggedUserDto
             {
-                UserName = UserName,
                 UserId = UserId,
+                UserName = UserName,
                 UserRole = UserRole
             };
 
@@ -173,12 +181,49 @@ namespace TicketSystemAPI.Controllers
         [Route("login")]
         public ActionResult Login([FromBody] UserLoginDto dto)
         {
-            string tokenGenerated = _tokenService.GenerateJwt(dto);
-            var user = new UserTokenDto()
+            var user = _context.Users
+                .Include(u => u.Role)
+                .FirstOrDefault(u => u.Email == dto.Email);
+
+            if (user is null)
             {
-                Token = tokenGenerated
+                throw new BadRequestException("Invalid username or password");
+            }
+
+            var result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, dto.Password);
+            if (result == PasswordVerificationResult.Failed)
+            {
+                throw new BadRequestException("Invalid username or password");
+            }
+
+            var claims = new List<Claim>()
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}"),
+                new Claim(ClaimTypes.Role, $"{user.Role.Name}")
+
             };
-            return Ok(user);
+
+            if (!string.IsNullOrEmpty(user.Nationality))
+            {
+                claims.Add(
+                    new Claim("Nationality", user.Nationality)
+                    );
+            }
+            string tokenGenerated = _tokenService.GenerateJwt(claims);
+            string refreshTokenGenerated = _tokenService.GenerateRefreshToken();
+            var tokens = new UserTokenDto()
+            {
+                Token = tokenGenerated,
+                RefreshToken = refreshTokenGenerated                
+            };
+
+            user.RefreshToken = refreshTokenGenerated;
+            user.RefreshTokenExpiryTime = DateTime.Now.AddDays(1);
+
+            _context.SaveChanges();
+
+            return Ok(tokens);
         }
 
         // DELETE: api/Users/5

@@ -7,6 +7,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AdminpanelComponent } from './adminpanel/adminpanel.component';
 import { UserTicketsComponent } from './ticket/user-tickets/user-tickets.component';
+import { AuthGuard } from './auth.guard';
 
 
 const routes: Routes = [
@@ -14,7 +15,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'admin', component: AdminpanelComponent },
-  { path: 'userTickets', component: UserTicketsComponent }
+  { path: 'userTickets', component: UserTicketsComponent, canActivate: [AuthGuard] }
 ];
 
 

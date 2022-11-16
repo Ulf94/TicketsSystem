@@ -11,6 +11,8 @@ import { UserService } from './user.service';
 export class TokenInterceptorService implements HttpInterceptor {
 
   constructor(private service: UserService) { }
+
+  
   intercept(req:any, next:any) {
     let tokenizedReq = req.clone({
       setHeaders: {

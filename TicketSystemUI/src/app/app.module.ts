@@ -21,6 +21,13 @@ import { UserTicketsComponent } from './ticket/user-tickets/user-tickets.compone
 import { TicketDetailsComponent } from './ticket/ticket-details/ticket-details.component';
 import { TicketDetailsUserListComponent } from './ticket/ticket-details-user-list/ticket-details-user-list.component';
 import { SendBackComponentComponent } from './send-back-component/send-back-component.component';
+import { JwtModule } from '@auth0/angular-jwt';
+import { AuthGuard } from './auth.guard';
+
+
+export function tokenGetter() {
+  return localStorage.getItem("token");
+}
 
 @NgModule({
   declarations: [
@@ -45,12 +52,22 @@ import { SendBackComponentComponent } from './send-back-component/send-back-comp
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: ["localhost:5001", "localhost:44322"],
+        disallowedRoutes: []
+      }
+    })
+
   ],
-  providers: [TicketApiService, UserService, {
-    provide: HTTP_INTERCEPTORS,
-    useClass: TokenInterceptorService,
-    multi: true
-  }],
+  providers: [TicketApiService,
+    UserService, {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      multi: true
+    },
+    AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

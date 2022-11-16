@@ -48,6 +48,7 @@ export class UserService {
     return this.http.post(this.ticketAPIUrl + "/Users/login", userLogin).subscribe((res: any) => {
       this.isAuthenticated = true;
       localStorage.setItem('token', res.token);
+      localStorage.setItem("refreshToken", res.refreshToken);
       this.currentUser();
       this.router.navigate(['/'])
       this.service.getTickets();
@@ -55,11 +56,11 @@ export class UserService {
       err => {
         console.log(err);
       })
-
   }
 
   logoutUser(): any {
     localStorage.removeItem('token');
+    localStorage.removeItem('refreshToken');
     localStorage.removeItem('userName');
     localStorage.removeItem('userId');
     localStorage.removeItem('userRole');

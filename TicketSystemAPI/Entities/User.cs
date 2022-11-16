@@ -13,8 +13,9 @@ namespace TicketSystemAPI.Entities
         public DateTime? DateOfBirth { get; set; }
         public string Nationality { get; set; }
         public string PasswordHash { get; set; }
-
         public int RoleId { get; set; }
-        public virtual Role Role { get; set; }
+        public Role Role { get; set; }
+        public string? RefreshToken { get; set; }
+        public DateTime? RefreshTokenExpiryTime { get; set; }
     }
 }

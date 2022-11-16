@@ -17,6 +17,7 @@ using TicketSystemAPI.Data;
 using TicketSystemAPI.Entities;
 using TicketSystemAPI.Services;
 using TicketSystem.Authorization;
+using System;
 
 namespace TicketSystemAPI
 {
@@ -60,6 +61,8 @@ namespace TicketSystemAPI
                 cfg.SaveToken = true;
                 cfg.TokenValidationParameters = new TokenValidationParameters
                 {
+                    RequireExpirationTime = true,
+                    ClockSkew = TimeSpan.Zero,
                     ValidIssuer = authenticationSettings.JwtIssuer,
                     ValidAudience = authenticationSettings.JwtIssuer,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authenticationSettings.JwtKey)),

@@ -68,6 +68,7 @@ namespace TicketSystemAPI.Controllers
 
        
         [HttpPatch]
+        [Authorize(Roles = "Manager, Admin, User ")]
         public async Task<IActionResult> PatchTicket(UpdateTicketCommand ticket)
         {
             await _mediator.Send(ticket);
